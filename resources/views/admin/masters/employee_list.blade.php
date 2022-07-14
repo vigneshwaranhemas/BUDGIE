@@ -1,6 +1,6 @@
 @extends('layouts.simple.candidate_master')
 @section('title', 'Business')
-<!-- Main -->
+
 @section('css')
 <!-- <link rel="stylesheet" type="text/css" href="../assets/css/prism.css"> -->
     <!-- Plugins css start-->
