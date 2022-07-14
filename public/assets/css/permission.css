@@ -1,0 +1,26 @@
+.btn-rounded {
+  border-radius: 2em;
+  padding: 6px 18px;
+}
+
+.modify_switch {
+  width: 47 !important;
+  height: 22px !important;
+}
+
+.switch-state:before {
+  position: absolute;
+  content: "";
+  height: 15px !important;
+  width: 15px !important;
+  left: 4px !important;
+  bottom: 4px !important;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.switch input:checked+.switch-state {
+  background-color: #06b5dd !important;
+}
