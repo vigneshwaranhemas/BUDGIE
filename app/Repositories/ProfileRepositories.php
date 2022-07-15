@@ -371,14 +371,36 @@ class ProfileRepositories implements IProfileRepositories
                             'department' => $input_details['Department'],
                            'designation'=>  $input_details['Designation'],
                            'worklocation'=> $input_details['work_location'],
-                           'doj'=>  $input_details['doj_pop'],
-                           'payroll_status'=>$input_details['intake'],
-                           'ctc_per_month'=> $input_details['CTC'],
+                           'doj'=> $input_details['doj_pop'],
+                           'payroll_status'=> $input_details['intake'],
+                           'ctc_per_annual'=> $input_details['CTC'],
                            'grade'=>  $input_details['grade_val'],
                            'RFH'=> $input_details['rfh'],
                            ]);
         // dd(DB::getQueryLog());
          return $update_roletbl;
     }
+    public function insert_followup_department( $input_details ){
+         // echo "<pre>";print_r($input_details);       die; 
+      DB::table('department_followup_details')->insert(
+                 array(
+                           'Department' => $input_details['Department'],
+                           'Designation' => $input_details['Designation'],
+                           'emp_id' =>  $input_details['emp_id']
+                 )
+            );
+   }
+   public function insert_followup_designation( $input_details ){
+    // echo "<pre>";print_r($input_details);       die; 
+        // DB::enableQueryLog();
+      DB::table('department_followup_details')->insert(
+                 array(     'Department' => $input_details['Department'],
+                           'Designation' => $input_details['Designation'],
+                           'emp_id' =>  $input_details['emp_id']
+                 )
+            );
+        // dd(DB::getQueryLog());
+   }
+     
 
 }

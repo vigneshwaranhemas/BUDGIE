@@ -674,3 +674,4 @@ Route::post('bh_sup_pms_checkbox_data_submit','GoalsController@bh_sup_pms_checkb
 Route::post('bh_sup_pms_checkbox_data_save','GoalsController@bh_sup_pms_checkbox_data_save');
 
 Route::get('get_all_sup_info_bh','GoalsController@get_all_sup_info_bh');
+Route::post('employee_ctc_pdf_create','CtcController@employee_ctc_pdf_create');
