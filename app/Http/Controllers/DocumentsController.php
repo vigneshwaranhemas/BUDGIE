@@ -988,7 +988,36 @@ public function hr_information_save(Request $request){
     return response()->json(['response'=>'Update'] ); 
 }
 public function hr_working_information(Request $request){
-    // echo "<pre>";print_r($request->all());die;
+        $dep_old_res = DB::table("customusers")
+                            ->select('department','designation')
+                            ->where('empID', $request->emp_id)
+                            ->get();
+         // echo "<pre>";print_r($dep_old_res[0]->designation);       die; 
+
+    if ($request->Department != $dep_old_res[0]->department && $request->Designation != $dep_old_res[0]->designation) {
+        $input_details = array('Department' => $request->Department,
+                                'Designation'=> $request->Designation,
+                                'emp_id'=> $request->emp_id,
+                            );
+        $course_list_result = $this->profrpy->insert_followup_department($input_details);
+     }           
+     if ($request->Department != $dep_old_res[0]->department && $request->Designation == $dep_old_res[0]->designation) {
+        $input_details = array('Department' => $request->Department,
+                                'Designation'=> $dep_old_res[0]->designation,
+                                'emp_id'=> $request->emp_id,
+                            );
+        $course_list_result = $this->profrpy->insert_followup_department($input_details);
+     }
+
+     if ($request->Designation != $dep_old_res[0]->designation && $request->Department == $dep_old_res[0]->department) {
+        $input_details = array(
+                           'Designation'=> $request->Designation,
+                            'Department' => $dep_old_res[0]->department,
+                           'emp_id'=> $request->emp_id,
+                            );
+        $course_list_result = $this->profrpy->insert_followup_designation($input_details);
+     }
+
     $input_details = array('Department' => $request->Department,
                            'Designation'=> $request->Designation,
                            'work_location'=> $request->work_location,
