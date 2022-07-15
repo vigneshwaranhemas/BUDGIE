@@ -3910,12 +3910,14 @@ class GoalsController extends Controller
                 }
                 return $btn;
             })
-            ->addColumn('action', function($row) {
+            /*action button for CTC */
+            /*->addColumn('action', function($row) {
                    $btn='<a onclick="employee_ctc_pdf_generate('."'".$row->created_by."'".');" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Profile" type="button" style="width: 15%;height: 35px;"></a>';
 
                     return $btn;
-                })
             ->rawColumns(['status','action'])
+                })*/
+            ->rawColumns(['status'])
             ->make(true);
 
         }

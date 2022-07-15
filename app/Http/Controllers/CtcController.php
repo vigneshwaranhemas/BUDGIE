@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\IGoalRepository;
+use App\Repositories\ICtcRepository;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class CtcController extends Controller
 {
-    public function __construct(IGoalRepository $goal)
+    public function __construct(ICtcRepository $ctcrop)
     {
         $this->middleware('is_admin');
-        $this->goal = $goal;
+        $this->ctcrop = $ctcrop;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
@@ -34,69 +34,45 @@ class CtcController extends Controller
     public function employee_ctc_pdf_create(Request $req)
     {
 
-// echo'<pre>';print_r($req->all());die;
+        $input_details_rr = array(
+            'emp_id' => $req->input('emp_id') ,
+        );
 
-            /*ctc amount from tb*/
-        $get_cs_pa = $req->input('or_closed_salary');
+        $get_tblrfh_result = $this->ctcrop->get_customuser_details($input_details_rr);
 
+        $get_cs_pa_amount = $get_tblrfh_result[0]->ctc_per_annual*$get_tblrfh_result[0]->increment_percentage / 100;
+        $get_cs_pa = $get_cs_pa_amount +  $get_tblrfh_result[0]->ctc_per_annual;
+        /*1*/
         $sc_basic_pa = round($get_cs_pa * 0.4);
         $sc_basic_pm = round($sc_basic_pa / 12);
-
+        /*2*/
         $sc_hra_pa = round($sc_basic_pa / 2);
         $sc_hra_pm = round($sc_hra_pa / 12);
-
+        /*3*/
         $sc_medical_allowance_pa = round(1250 * 12);
         $sc_medical_allowance_pm = "1250";
-
+        /*4*/
         $sc_conveyance_expence_pa = "19200";
         $sc_conveyance_expence_pm = round($sc_conveyance_expence_pa / 12);
+        /*5*/
+        $sc_special_allowance_pa = 67325;
+        $sc_special_allowance_pm = 5610;
 
-        $sc_special_allowance_pa = 0;
-        $sc_special_allowance_pm = 3729;
         
         $sc_monthly_gross_pm_a = round($sc_basic_pm + $sc_hra_pm + $sc_conveyance_expence_pm + $sc_special_allowance_pm + $sc_medical_allowance_pm);
-        $sc_monthly_gross_pa_a = round($sc_basic_pa + $sc_hra_pa + $sc_conveyance_expence_pa + $sc_special_allowance_pa + $sc_medical_allowance_pa);
+        $sc_monthly_gross_pa_a = round($sc_basic_pa + $sc_hra_pa + $sc_conveyance_expence_pa + $sc_special_allowance_pa + $sc_medical_allowance_pa);    
 
-        $get_pf_eligible_amt = $sc_basic_pm + $sc_conveyance_expence_pm + $sc_medical_allowance_pm + $sc_special_allowance_pm;
+        /*pf*/
+        $emp_pf_cont_pa = 21600;
+        $emp_pf_cont_pm = 1800;
 
-        if ($get_pf_eligible_amt <= 15000)
-        {
-            $emp_pf_cont_pa = round($get_pf_eligible_amt * 12 * 0.12);
-        }
-        else
-        {
-            $emp_pf_cont_pa = round(15000 * 0.12);
-        }
-
-        $emp_pf_cont_pm = round($emp_pf_cont_pa / 12);
-
-        if ($sc_monthly_gross_pm_a <= 21000)
-        {
-            $get_emp_esi_cont_pm = round($sc_monthly_gross_pm_a * 0.0325);
-            $emp_esi_cont_pm = round($sc_monthly_gross_pm_a * 0.0325);
-            $emp_esi_cont_pa = round($get_emp_esi_cont_pm * 12);
-
-            $sub_total_b_pm = $emp_pf_cont_pm + $emp_esi_cont_pm;
-            $sub_total_b_pa = $emp_pf_cont_pa + $emp_esi_cont_pa;
-            $get_sub_total_b_pa = $emp_pf_cont_pa + $emp_esi_cont_pa;
-
-        }
-        else
-        {
-            $get_emp_esi_cont_pm = 0;
-
-            $emp_esi_cont_pm = 0;
-            $emp_esi_cont_pa = 0;
-
-            $sub_total_b_pm = $emp_pf_cont_pm;
-            $sub_total_b_pa = $emp_pf_cont_pa;
-
-        }
+        $sub_total_b_pm = 0;
+        $sub_total_b_pa = 0;
 
         $gratity_pa = round((15 / 26) * $sc_basic_pm);
         $gratity_pm = round($gratity_pa / 12);
 
-        $bonus_pa = "9820";
+        $bonus_pa = 10144;
         $bonus_pm = round($bonus_pa / 12);
 
         $sub_total_c_pm = round($gratity_pm + $bonus_pm);
@@ -111,66 +87,27 @@ class CtcController extends Controller
             $get_sa_dif = $get_cs_pa - $abc_ctc_pa;
             $sc_special_allowance_pa = $get_sa_dif;
             $sc_monthly_gross_pa_a = round($sc_basic_pa + $sc_hra_pa + $sc_conveyance_expence_pa + $sc_special_allowance_pa + $sc_medical_allowance_pa);
-
             $abc_ctc_pa = round($sc_monthly_gross_pa_a + $sub_total_b_pa + $sub_total_c_pa);
             $sc_special_allowance_pm = round($sc_special_allowance_pa / 12);
 
             $get_pf_eligible_amt = $sc_basic_pm + $sc_conveyance_expence_pm + $sc_medical_allowance_pm + $sc_special_allowance_pm;
 
-            
-            if ($get_pf_eligible_amt <= 15000)
-            {
-                $emp_pf_cont_pa = round($get_pf_eligible_amt * 12 * 0.12);
-            }
-            else
-            {
-                $emp_pf_cont_pa = round(15000 * 0.12);
-            }
-    
-            $emp_pf_cont_pm = round($emp_pf_cont_pa / 12);
+            $emp_pf_cont_pa = 21600;
+            $emp_pf_cont_pm = 1800;
 
-            $sc_monthly_gross_pm_a = round($sc_basic_pm + $sc_hra_pm + $sc_conveyance_expence_pm + $sc_special_allowance_pm + $sc_medical_allowance_pm);
-
-            // repeat the process
-            if ($sc_monthly_gross_pm_a <= 21000)
-            {
-                $emp_esi_cont_pm = round($sc_monthly_gross_pm_a * 0.0325);
-                $emp_esi_cont_pa = round($get_emp_esi_cont_pm * 12);
-                
-                $sub_total_b_pm = $emp_pf_cont_pm + $emp_esi_cont_pm;
-                $sub_total_b_pa = $get_sub_total_b_pa;
-                
-            }
-            else
-            {
-                $emp_esi_cont_pm = 0;
-                $emp_esi_cont_pa = 0;
-
-                $sub_total_b_pm = $emp_pf_cont_pm;
-                $sub_total_b_pa = $emp_pf_cont_pa;
-
-            }
+            $sub_total_b_pm = 0;
+            $sub_total_b_pa = 0;
 
             $abc_ctc_pm = round($sc_monthly_gross_pm_a + $sub_total_b_pm + $sub_total_c_pm);
             $abc_ctc_pa = round($sc_monthly_gross_pa_a + $sub_total_b_pa + $sub_total_c_pa);
 
         }
         
-        if ($emp_esi_cont_pm >= 1)
-        {
-            $n23 = ($sc_monthly_gross_pm_a * 0.0075);
-        }
-        else
-        {
-            $n23 = 0;
-        }
-        
-        $n25 = (($sc_monthly_gross_pm_a - $emp_pf_cont_pm) - $n23);
        
-        $n26 = ($n25 - 208);
-        
-        $netpay = round($n26);
-
+echo "<pre>";print_r($abc_ctc_pm);  
+echo "<pre>";print_r($abc_ctc_pa);  
+die;
+            
         $amount_in_words = $this->convert_number($req->input('or_closed_salary'));
 
         $cur_date = date('d-m-Y');

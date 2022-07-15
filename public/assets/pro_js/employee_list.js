@@ -282,8 +282,7 @@ function get_role_type() {
             // console.log(data)
             var html = '<option value="">Select</option>';
             for (let index = 0; index < data.length; index++) {
-            // console.log(data[index].name)
-                html += "<option value=" + data[index].name + ">" + data[index].name + "</option>";
+                html += "<option value='" + data[index].name + "' data-id= '"+ data[index].role_id + "'>" + data[index].name + "</option>";
             }
             $('#employe_role').html(html);
 
@@ -310,6 +309,8 @@ function employee_edit_process(id){
         }
     });
 }
+
+
 //Edit function
 $(()=>{
 
@@ -319,6 +320,8 @@ $("#editUpdate").on('click', function() {
     $('#editUpdate').html('Processing..!');
 
     var employe_role = $('#employe_role').val();
+    var role_id = $("#employe_role").find(':selected').data("id");
+    // alert(role_id)
     var ed_id = $('#ed_id').val();
 
     $.ajax({
@@ -327,6 +330,7 @@ $("#editUpdate").on('click', function() {
         data:{
             "id":ed_id,
             "employe_role":employe_role,
+            "role_id":role_id,
         },
         dataType: "json",
         success: function(data) {

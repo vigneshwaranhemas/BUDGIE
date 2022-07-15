@@ -1687,7 +1687,7 @@ function hr_listing_tab_record(){
         columns: [
            
             {   data: 'DT_RowIndex', name: 'DT_RowIndex'    },
-            {   data: 'action', name: 'action'  },
+            // {   data: 'action', name: 'action'  },
             {   data: 'created_by_name', name: 'created_by_name'  },
             {   data: 'created_by', name: 'created_by'  },
             {   data: 'goal_name', name: 'goal_name'  },

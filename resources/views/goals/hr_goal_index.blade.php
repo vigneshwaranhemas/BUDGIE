@@ -391,7 +391,7 @@
                                                         <tr>
                                                             <!-- <th><input class="mail_class" type="checkbox" name="select_all" value="1" id="example-select-all"></th> -->
                                                             <th scope="col">ID</th>
-                                                            <th scope="col">Action</th>
+                                                            <!-- <th scope="col">Action</th> -->
                                                             <th scope="col">Employee Name</th>
                                                             <th scope="col">Employee ID</th>
                                                             <th scope="col">Goal Name</th>

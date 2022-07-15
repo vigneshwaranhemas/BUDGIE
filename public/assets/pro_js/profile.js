@@ -841,7 +841,7 @@ function profile_info_process(id){
         data:{},
         dataType: "json",
         success: function(data) {
-            // console.log(data['image'])
+            // console.log(data)
             if (data['image']== null) {
                 $("#profile_img").attr('src',"../ID_card_photo/dummy.png");
             }
@@ -929,6 +929,8 @@ function profile_info_process(id){
              $('#height_can_txt').html(data['profile'].height_can);
              $('#weight_can_txt').html(data['profile'].weight_can);
              $('#identification_can_txt').html(data['profile'].identification_can);
+             $('#HR_on_boarder').html(data['profile'].HR_on_boarder);
+             $('#HR_Recruiter').html(data['profile'].HR_Recruiter);
              /*popup values*/
              $('#height_can').val(data['profile'].height_can);
              $('#weight_can').val(data['profile'].weight_can);
