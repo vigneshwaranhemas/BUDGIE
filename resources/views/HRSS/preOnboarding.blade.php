@@ -76,27 +76,6 @@
                      @else
 
                      @endif
-                           {{-- </tr>
-                           <tr>
-                                <td>2</td>
-                                <td>CD3</td>
-                                <td>Shradha</td>
-                                <td>Shradha@example.com</td>
-                                <td>9898989898</td>
-                              <td>
-                                <button  aria-expanded="false" class="btn btn-default waves-effect waves-light" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                            </td>
-                           </tr>
-                           <tr>
-                                <td>1</td>
-                                <td>CD2</td>
-                                <td>Bineta</td>
-                                <td>Bineta@example.com</td>
-                                <td>9898989898</td>
-                              <td>
-                                <button  aria-expanded="false" class="btn btn-default  waves-effect waves-light" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                            </td>
-                           </tr> --}}
                         </tbody>
                      </table>
                      <input type="hidden" name="_token" value="{!! csrf_token() !!}" id="token">

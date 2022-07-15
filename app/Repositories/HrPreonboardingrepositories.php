@@ -348,10 +348,16 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                                          );
                                          Candidate_Other_infoModel::where('empID',$data1['empID'])
                                          ->update(['empID'=>$data['empId'],'Id_status'=>'1']); 
-                                         // DB::table('candidate_contact_information')->where('emp_id',$data1['empID'])
-                                         //   ->update(['emp_id'=>$data['empId']]);
- 
- 
+                                        //  DB::table('candidate_account_information')->where('emp_id',$data1['empID'])
+                                        //    ->update(['emp_id'=>$data['empId']]);
+                                        //  DB::table('candidate_education_details')->where('emp_id',$data1['empID'])
+                                        //    ->update(['emp_id'=>$data['empId']]);
+                                        //  DB::table('candidate_experience_details')->where('empID',$data1['empID'])
+                                        //    ->update(['empID'=>$data['empId']]);
+                                        //  DB::table('candidate_family_information')->where('emp_id',$data1['empID'])
+                                        //    ->update(['emp_id'=>$data['empId']]);
+                                        //  DB::table('documents')->where('emp_id',$data1['empID'])
+                                        //    ->update(['emp_id'=>$data['empId']]);  
                    }
         }
        return $final_info;
