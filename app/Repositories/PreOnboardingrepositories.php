@@ -10,6 +10,7 @@ use App\welcome_aboard;
 use App\Models\Epf_Forms;
 use App\Models\Medical_insurance;
 use Session;
+use Auth;
 
 class PreOnboardingrepositories implements IPreOnboardingrepositories {
      public function Check_onBoard($table,$test)
@@ -63,11 +64,14 @@ class PreOnboardingrepositories implements IPreOnboardingrepositories {
    }
    public function fetch_buddy_info($data)
    {
-          $result=CustomUser::join('candidate_details','candidate_details.welcome_buddy','=','customusers.empID')
-                                  ->where('candidate_details.cdID',$data)
-                                  ->select('customusers.empID','customusers.username','customusers.designation',
-                                  'customusers.email','customusers.contact_no')
-                                  ->first();
+        //   $result=CustomUser::join('candidate_details','candidate_details.welcome_buddy','=','customusers.empID')
+        //                           ->where('candidate_details.cdID',$data)
+        //                           ->select('customusers.empID','customusers.username','customusers.designation',
+        //                           'customusers.email','customusers.contact_no')
+        //                           ->first();
+
+          $result=CustomUser::where('empID',Auth::user()->Buddy)
+                             ->select('empID','username','designation','email','contact_no')->first();
           return $result;
    }
 
@@ -91,22 +95,15 @@ class PreOnboardingrepositories implements IPreOnboardingrepositories {
 
 
  //get candidate and buddy info for buddy feedback work  done by vignesh
-
             public function get_candidate_and_buddy_info($data)
-            {
-                // $result=CustomUser::join('candidate_details','customusers.cdID','=','candidate_details.cdID')
-                //                     ->join('users','users.empID','=','candidate_details.welcome_buddy')
-                //                     ->where('customusers.cdID',$data['cdID'])
-                //                     ->select('customusers.empID','customusers.username',
-                //                              'customusers.department','customusers.designation',
-                //                              'customusers.worklocation','customusers.doj','users.name')->first();
-                    $result=CustomUser::join('candidate_details','customusers.cdID','=','candidate_details.cdID')
-                                    ->join('customusers as cs','cs.empID','=','candidate_details.welcome_buddy')
-                                    ->where('customusers.cdID',$data['cdID'])
+            {                
+                    $result=CustomUser::join('customusers as cs','cs.empID','=','customusers.Buddy')
+                                    ->where('customusers.empID',$data['empID'])
                                     ->select('cs.username as buddy_name','customusers.empID',
                                              'customusers.username','customusers.department',
                                              'customusers.designation','customusers.worklocation',
                                              'customusers.doj')->first();
+
                     return $result;
             }
 

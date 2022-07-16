@@ -817,6 +817,7 @@ $('#profile_but').on('click',function(){
         data:{},
         dataType: "json",
         success: function(data) {
+            // console.log(data)
               var results = JSON.parse(data['profile'].skill_secondary);
               var skill_secondary=  String(results);
               $('#skill_secondary').tagsinput('add', skill_secondary);
@@ -841,6 +842,7 @@ function profile_info_process(id){
         data:{},
         dataType: "json",
         success: function(data) {
+            console.log(data)
             // console.log(data)
             if (data['image']== null) {
                 $("#profile_img").attr('src',"../ID_card_photo/dummy.png");
@@ -863,6 +865,8 @@ function profile_info_process(id){
              $('#email').html(data['profile'].email);
              $('#blood_grp').html(data['profile'].blood_grp);
              $('#dob').html(dob);
+             console.log('sdh');
+             console.log(data['profile']);
              if (data['profile'].language !="") { 
                var test=JSON.parse(data['profile'].language); 
                $("#language").val(test).select2(); 
