@@ -412,12 +412,12 @@ max-width: 1000px !important;
                                                          <span class="text-danger color-hider" id="specially_status_error" style="display:none;color: red;"></span>
                                                       </div>
                                                       <div class="col-sm-4 mb-3">
-                                                        <label for="aadhar_number">Aadhar Card Number</label>
+                                                        <label for="aadhar_number">Aadhar Card Number *</label>
                                                           <input class="form-control" type="text" name="aadhar_number" maxlength="12" onkeypress="return isNumber(event)" id="aadhar_number" >
                                                          <span class="text-danger color-hider" id="aadhar_number_error" style="display:none;color: red;"></span>
                                                       </div>
                                                       <div class="col-sm-4 mb-3">
-                                                        <label for="religion can">PAN Number</label>
+                                                        <label for="religion can">PAN Number *</label>
                                                           <input class="form-control" type="text" name="pan_number" id="pan_number" >
                                                          <span class="text-danger color-hider" id="pan_number_error" style="display:none;color: red;"></span>
                                                       </div>

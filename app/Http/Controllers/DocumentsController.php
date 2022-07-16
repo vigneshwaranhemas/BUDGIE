@@ -184,11 +184,18 @@ class DocumentsController extends Controller
                     ]);
 
         if($validator->passes()){
+
+                if ($request->input('middle_name') =="") {
+                    $middle_name = " ";
+                }else{
+                    $middle_name = $request->input('middle_name');
+                }
+
                     $data =array(
                             'emp_id'=>$emp_ID,
                             'cdID'=>$cdID,
                             'username'=>$request->input('username'), 
-                            'm_name'=>$request->input('middle_name'), 
+                            'm_name'=>$middle_name, 
                             'l_name'=>$request->input('last_name'), 
                             'blood_grp'=>$request->input('blood_gr'), 
                             'gender'=>$request->input('gender_emp'), 
@@ -979,6 +986,40 @@ public function tag_iput_val(Request $request){
         return response()->json( $course_list_result ); 
     }
 public function hr_information_save(Request $request){
+    $dep_old_res = DB::table("customusers")
+                            ->select('department','designation','sup_name','reviewer_name')
+                            ->where('empID', $request->emp_id)
+                            ->get();
+
+    if ($request->Reporting_val != $dep_old_res[0]->sup_name && $request->reviewer_val != $dep_old_res[0]->reviewer_name) {
+         $input_details = array('Department' => $dep_old_res[0]->department,
+                                'Designation'=> $dep_old_res[0]->designation,
+                                'emp_id'=> $request->emp_id,
+                                'sup_name'=> $request->Reporting_val,
+                                'reviewer_name'=> $request->reviewer_val,
+                            );
+        $sup_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
+    }
+    if ($request->Reporting_val != $dep_old_res[0]->sup_name && $request->reviewer_val == $dep_old_res[0]->reviewer_name) {
+         $input_details = array('Department' => $dep_old_res[0]->department,
+                                'Designation'=> $dep_old_res[0]->designation,
+                                'emp_id'=> $request->emp_id,
+                                'sup_name'=> $request->Reporting_val,
+                                'reviewer_name'=> $dep_old_res[0]->reviewer_name,
+                            );
+        $sup_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
+    }
+    if ($request->reviewer_val != $dep_old_res[0]->reviewer_name && $request->Reporting_val == $dep_old_res[0]->sup_name) {
+         $input_details = array('Department' => $dep_old_res[0]->department,
+                                'Designation'=> $dep_old_res[0]->designation,
+                                'emp_id'=> $request->emp_id,
+                                'sup_name'=> $dep_old_res[0]->sup_name,
+                                'reviewer_name'=> $request->reviewer_val,
+                            );
+         // echo "<pre>";print_r($input_details);       die; 
+        $sup_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
+    }
+
     $input_details = array("reporting_manager" => $request->reporting_manager,
                            'reviewer'=> $request->reviewer,
                            'emp_id'=> $request->emp_id,
@@ -989,33 +1030,39 @@ public function hr_information_save(Request $request){
 }
 public function hr_working_information(Request $request){
         $dep_old_res = DB::table("customusers")
-                            ->select('department','designation')
+                            ->select('department','designation','sup_name','reviewer_name')
                             ->where('empID', $request->emp_id)
                             ->get();
-         // echo "<pre>";print_r($dep_old_res[0]->designation);       die; 
+         // echo "<pre>";print_r($dep_old_res[0]->sup_name);       die; 
 
     if ($request->Department != $dep_old_res[0]->department && $request->Designation != $dep_old_res[0]->designation) {
         $input_details = array('Department' => $request->Department,
                                 'Designation'=> $request->Designation,
                                 'emp_id'=> $request->emp_id,
+                                'sup_name'=> $dep_old_res[0]->sup_name,
+                                'reviewer_name'=> $dep_old_res[0]->reviewer_name,
                             );
-        $course_list_result = $this->profrpy->insert_followup_department($input_details);
+        $course_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
      }           
      if ($request->Department != $dep_old_res[0]->department && $request->Designation == $dep_old_res[0]->designation) {
         $input_details = array('Department' => $request->Department,
                                 'Designation'=> $dep_old_res[0]->designation,
                                 'emp_id'=> $request->emp_id,
+                                'sup_name'=> $dep_old_res[0]->sup_name,
+                                'reviewer_name'=> $dep_old_res[0]->reviewer_name,
                             );
-        $course_list_result = $this->profrpy->insert_followup_department($input_details);
+        $course_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
      }
 
      if ($request->Designation != $dep_old_res[0]->designation && $request->Department == $dep_old_res[0]->department) {
         $input_details = array(
-                           'Designation'=> $request->Designation,
+                            'Designation'=> $request->Designation,
                             'Department' => $dep_old_res[0]->department,
-                           'emp_id'=> $request->emp_id,
+                            'emp_id'=> $request->emp_id,
+                            'sup_name'=> $dep_old_res[0]->sup_name,
+                            'reviewer_name'=> $dep_old_res[0]->reviewer_name,
                             );
-        $course_list_result = $this->profrpy->insert_followup_designation($input_details);
+        $course_list_result = $this->profrpy->insert_followup_reviewer($input_details,'department_followup_details');
      }
 
     $input_details = array('Department' => $request->Department,
