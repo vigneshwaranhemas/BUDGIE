@@ -1141,6 +1141,7 @@ class AdminRepository implements IAdminRepository
         $update_roletbl = $update_roletbl->where( 'id', '=', $input_details['id'] );
         $update_roletbl->update( [
             'role_type' => $input_details['employe_role'],
+            'role_id' => $input_details['role_id'],
         ] );
 
     }

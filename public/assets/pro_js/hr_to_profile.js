@@ -512,8 +512,8 @@ $('#add_working_information').submit(function(e) {
                 $("#"+key+'_error').text(value)
                 $("#"+key+'_error').show();
                 });
-                $('#exp_submit').attr('disabled' , false);
-                $('#exp_submit').html('Save'); 
+                $('#work_info_submit').attr('disabled' , false);
+                $('#work_info_submit').html('Save'); 
            }
             if(data.response =='Update'){
                Toastify({

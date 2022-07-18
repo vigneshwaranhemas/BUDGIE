@@ -2834,17 +2834,19 @@ class AdminController extends Controller
         $input_details = array(
             'id'=>$req->input('id'),
         );
-
         $employee_list_result = $this->admrpy->employee_list_result( $input_details );
 
         return response()->json( $employee_list_result );
     }
     public function update_employee_list_pop(Request $req){
 
+        // echo "<pre>";print_r($req->all());die;
         $input_details = array(
             'id'=>$req->input('id'),
             'employe_role'=>$req->input('employe_role'),
+            'role_id'=>$req->input('role_id'),
         );
+
         // echo "<pre>";print_r($input_details);die;
         $update_role_unit_details_result = $this->admrpy->update_employee_type( $input_details );
 

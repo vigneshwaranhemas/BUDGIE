@@ -165,7 +165,7 @@ max-width: 1000px !important;
                         <div class="row">
                            <div class="col-md-6">
                               <div class="ttl-info text-left">
-                                 <h6><i class="fa fa-envelope"></i>   Email</h6>
+                                 <h6><i class="fa fa-envelope"></i> Offical Email</h6>
                                  <div id="email"></div>
                               </div>
                            </div>
@@ -372,6 +372,7 @@ max-width: 1000px !important;
                                                           <!-- <input class="form-control" type="text" name="religion_can" id="religion_can" > -->
                                                           <select class="form-control dropdown" id="religion_can" name="religion_can">
                                                              <option value="" selected="selected" disabled="disabled">-- Select Religion --</option>
+                                                             <option value="prefer not to say">Prefer not to Say</option>
                                                              <option value="African Traditional &amp; Diasporic">African Traditional &amp; Diasporic</option>
                                                              <option value="Agnostic">Agnostic</option>
                                                              <option value="Atheist">Atheist</option>
@@ -404,18 +405,19 @@ max-width: 1000px !important;
                                                         <label for="Habits">Habits</label>
                                                           <select class="form-control" name="habits_status" id="habits_status">
                                                              <option value="">-Select Habits-</option>
+                                                             <option value="prefer not to say">Prefer not to Say</option>
                                                              <option value="Smokers">Smokers</option>
                                                              <option value="Non-smokers">Non-smokers</option>
                                                          </select>
                                                          <span class="text-danger color-hider" id="specially_status_error" style="display:none;color: red;"></span>
                                                       </div>
                                                       <div class="col-sm-4 mb-3">
-                                                        <label for="aadhar_number">Aadhar Card Number</label>
-                                                          <input class="form-control" type="text" name="aadhar_number" onkeypress="return isNumber(event)" id="aadhar_number" >
+                                                        <label for="aadhar_number">Aadhar Card Number *</label>
+                                                          <input class="form-control" type="text" name="aadhar_number" maxlength="12" onkeypress="return isNumber(event)" id="aadhar_number" >
                                                          <span class="text-danger color-hider" id="aadhar_number_error" style="display:none;color: red;"></span>
                                                       </div>
                                                       <div class="col-sm-4 mb-3">
-                                                        <label for="religion can">PAN Number</label>
+                                                        <label for="religion can">PAN Number *</label>
                                                           <input class="form-control" type="text" name="pan_number" id="pan_number" >
                                                          <span class="text-danger color-hider" id="pan_number_error" style="display:none;color: red;"></span>
                                                       </div>
@@ -555,6 +557,7 @@ max-width: 1000px !important;
                                                             </div>
                                                          </div>
                                                       </div>
+
                                                    </div>
                                                </div>
                                                <div class="modal-footer">
@@ -791,8 +794,8 @@ max-width: 1000px !important;
                               <div class="card-body rounded">
                                  <div class="row">
                                     <div class="col-md-6">
-                                        <div><strong> Recruiter : </strong> - </div> <hr>
-                                        <div><strong> Onboarder : </strong> - </div><hr>
+                                        <div><strong> Recruiter : </strong> <a id="HR_Recruiter"></a> </div> <hr>
+                                        <div><strong> Onboarder : </strong> <a id="HR_on_boarder"></a> </div><hr>
                                     </div>
                                     <div class="col-md-6">
                                        <div><strong>Reporting Manager : </strong> <a id="sup_name"></a></div> <hr>
@@ -1030,7 +1033,7 @@ max-width: 1000px !important;
                                             <span class="text-danger color-hider" id="exp_begin_on_error"  style="display:none;color: red;"></span>
                                         </div>
                                         <input type="checkbox" id="currently_working" name="currently_working" value="1">
-                                        <label for="vehicle1"> Currently Working</label><br>
+                                        <label for="vehicle1"> Present</label><br>
                                         <div class="col-md-12 mb-3">
                                             <label for="Due By">End On</label>
                                             <input class="form-control" name="exp_end_on" id="exp_end_on" type="date" placeholder="">
