@@ -371,14 +371,21 @@ class ProfileRepositories implements IProfileRepositories
                             'department' => $input_details['Department'],
                            'designation'=>  $input_details['Designation'],
                            'worklocation'=> $input_details['work_location'],
-                           'doj'=>  $input_details['doj_pop'],
-                           'payroll_status'=>$input_details['intake'],
-                           'ctc_per_month'=> $input_details['CTC'],
+                           'doj'=> $input_details['doj_pop'],
+                           'payroll_status'=> $input_details['intake'],
+                           'ctc_per_annual'=> $input_details['CTC'],
                            'grade'=>  $input_details['grade_val'],
                            'RFH'=> $input_details['rfh'],
                            ]);
         // dd(DB::getQueryLog());
          return $update_roletbl;
     }
+   
+   public function insert_followup_reviewer( $input_details,$table ){
+    // DB::enableQueryLog();
+      DB::table($table)->insert($input_details);
+      // dd(DB::getQueryLog());
+   }
+     
 
 }

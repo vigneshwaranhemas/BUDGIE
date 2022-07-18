@@ -1559,7 +1559,7 @@ function goal_record(){
          })
     });        
 
-/*select all*/
+/*select all org*/
 // Handle click on "Select all" control
    $('#example-select-all').on('click', function(){
       var rows = table_cot.rows({ 'search': 'applied' }).nodes();
@@ -1668,11 +1668,11 @@ function hr_listing_tab_record(){
             }
         },
         createdRow: function( row, data, dataIndex ) {
-            if (data.mail_con ==0) {
+            /*if (data.mail_con ==0) {
                 $( row ).find('td:eq(0)').html('<input class="mail_class" type="checkbox" name="id[]" value="'+ data.goal_unique_code +'"  data-goalcode="' + data.goal_unique_code +'">');   
             }else{
                 $( row ).find('td:eq(0)').html('-');
-            }
+            }*/
             $( row ).find('td:eq(0)').attr('data-label', 'Sno');
             $( row ).find('td:eq(1)').attr('data-label', 'Candidate Name');
             $( row ).find('td:eq(2)').attr('data-label', 'Emp ID');           
@@ -1687,6 +1687,7 @@ function hr_listing_tab_record(){
         columns: [
            
             {   data: 'DT_RowIndex', name: 'DT_RowIndex'    },
+            // {   data: 'action', name: 'action'  },
             {   data: 'created_by_name', name: 'created_by_name'  },
             {   data: 'created_by', name: 'created_by'  },
             {   data: 'goal_name', name: 'goal_name'  },
@@ -1987,3 +1988,28 @@ $('#checkbox_submit').on('click', function(){
         })
     }
 });
+
+function employee_ctc_pdf_generate(one) {
+    console.log(one)
+     $.ajax({
+        url:"employee_ctc_pdf_create",
+        type:"POST",
+        data:{emp_id:one},
+        success:function(data){
+            //    console.log(data.response);
+            if(data.response==1)
+            {
+                Toastify({
+                text: "Data Submitted Sucessfully..!",
+                duration: 1000,
+                close:true,
+                backgroundColor: "#4fbe87",
+            }).showToast();
+            setTimeout(
+                function() {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+        })
+ } 

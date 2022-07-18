@@ -389,7 +389,9 @@
                                                 <table id="listing_table" class="table table-border-vertical table-border-horizontal">
                                                     <thead>
                                                         <tr>
-                                                            <th><input class="mail_class" type="checkbox" name="select_all" value="1" id="example-select-all"></th>
+                                                            <!-- <th><input class="mail_class" type="checkbox" name="select_all" value="1" id="example-select-all"></th> -->
+                                                            <th scope="col">ID</th>
+                                                            <!-- <th scope="col">Action</th> -->
                                                             <th scope="col">Employee Name</th>
                                                             <th scope="col">Employee ID</th>
                                                             <th scope="col">Goal Name</th>

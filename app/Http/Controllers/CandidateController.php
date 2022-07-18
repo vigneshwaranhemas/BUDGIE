@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Auth;
 use Session;
 use File;
+use App\welcome_aboard;
+use App\Models\CustomUser;
 
 class CandidateController extends Controller
 {
@@ -81,8 +83,9 @@ class CandidateController extends Controller
     public function Candidate_Assigned_Buddy()
     {
         $sess_info=Session::get("session_info");
-        $cdID=$sess_info['cdID'];
-        $buddy_info=$this->preon->fetch_buddy_info($cdID);
+        $empID=Auth::user()->empID;
+        $buddy_info=$this->preon->fetch_buddy_info($empID);
+        // echo json_encode($buddy_info);die();
         return view('candidate.Buddy_info')->with('info',$buddy_info);
     }
 
@@ -112,9 +115,8 @@ class CandidateController extends Controller
     {
         $sess_info=Session::get("session_info");
         $table1="candidate_details";
-        $candiate_buddy_data=array("empId"=>$sess_info["empID"],
-                                   "cdID"=>$sess_info["cdID"]);
-        $id=array("empId"=>$sess_info["empID"]);
+        $candiate_buddy_data=array("empID"=>Auth::user()->empID);
+        $id=array("empId"=>Auth::user()->empID);
         $table="buddyfeedbackfields";
         $fields=$this->preon->getonBoardingFields($table);
         $feedback_info=$this->preon->get_buddy_info($id);
@@ -127,13 +129,14 @@ class CandidateController extends Controller
 
     public function welcome_aboard()
     {
+        
         return view('candidate.welcome_aboard');
     }
     public function view_welcome_aboard()
     {
-        return view('candidate.view_welcome_aboard');
+        $result=welcome_aboard::where('created_by',Auth::user()->empID)->first(); 
+        return view('candidate.view_welcome_aboard')->with('aboard_info',$result);
     }
-
     // Welcome Aboard Process Start
     public function add_welcome_aboard_process(Request $req)
     {
@@ -306,15 +309,14 @@ class CandidateController extends Controller
 public function insertPreOnboarding(Request $request)
 {
        $sess_info=Session::get("session_info");
-       $empId=$sess_info["empID"];
+       $empId=Auth::user()->empID;
        $data=array('emp_id'=>$empId);
        $table="candidate_preonboarding";
-       $table1='candidate_details';
-       $data1=array('cdID'=>$sess_info['cdID']);
-       $table1="candidate_details";
-       $candidate_info=$this->preon->get_canidate_info($table1,$data1);
+       $table1='customusers';
+       $data1=array('empID'=>Auth::user()->empID);
+       $candidate_info=Customuser::where('empID',Auth::user()->empID)->select('HR_Recruiter')->first();
        $usercheck=$this->preon->Check_onBoard($table,$data);
-       $recruiter_id=$candidate_info->created_by;
+       $recruiter_id=$candidate_info->HR_Recruiter;
        if(count($usercheck) > 0)
        {
         foreach($_POST['onboard'] as $onboard)
@@ -351,7 +353,7 @@ public function insertPreOnboarding(Request $request)
                                 'emp_id'=>$empId,
                                 'recruiter_id'=>$recruiter_id);
         }
-        $test="2";
+        // $test="2";
              $response=$this->preon->insert_onboard($main_data);
        }
 

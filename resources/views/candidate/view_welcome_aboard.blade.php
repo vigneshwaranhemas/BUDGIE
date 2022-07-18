@@ -80,7 +80,11 @@
 @endsection
 
 @section('breadcrumb-items')
-    <a href="{{ url('welcome_aboard') }}"><button class="btn btn-primary" type="button">Add Welcome Aboard</button></a>
+      @if(isset($aboard_info))
+           
+      @else
+        <a href="{{ url('welcome_aboard') }}"><button class="btn btn-primary" type="button">Add Welcome Aboard</button></a>
+      @endif
    {{-- <li class="breadcrumb-item">Dashboard</li>
 	<li class="breadcrumb-item active">Default</li> --}}
 @endsection

@@ -88,7 +88,6 @@ class HrController extends Controller
     {
          $sess_info=Session::get("session_info");
          $id=array('pre_onboarding_status'=>$sess_info["pre_onboarding"],'created_by'=>$sess_info["empID"]);
-        //  echo json_encode($sess_info);
          $user_info=$this->hpreon->get_candidate_info($id);
          $data['user_info']=$user_info;
          return view('HRSS.preOnboarding')->with('info',$data);
@@ -97,7 +96,7 @@ class HrController extends Controller
     {
         $sess_info=Session::get("session_info");
         $date=date('Y-m-d', strtotime("+1 day"));
-        $data=array("or_doj"=>$date,'created_by'=>$sess_info["empID"]);
+        $data=array("or_doj"=>$date,'HR_on_boarder'=>$sess_info["empID"]);
         $candidate_info=$this->hpreon->DayWiseCandidateInfo($data);
         return view('HRSS.Day_zero')->with('candidate_info',$candidate_info);
     }
@@ -504,9 +503,6 @@ class HrController extends Controller
 
       return DataTables::of($get_epf_list)
       ->addIndexColumn()
-
-
-
       ->addColumn('action', function($row) {
 
           $btn = '<button class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15%;height: 35px;"><i class="fa fa-gears " style="margin-left: -9px;"></i></button>
@@ -647,6 +643,7 @@ public function AddEmployee()
               if($validator->passes()){
                   $table_max_id=DB::select("SELECT `auto_increment` FROM INFORMATION_SCHEMA.TABLES
                   WHERE table_name = 'customusers'");
+                    //  $table_max_id=DB::select("SELECT max(id) from customusers");
                   $emp_id="CAND".($table_max_id[0]->auto_increment)."";
                   $emp_data=array('department'=>$request->Department,'designation'=>$request->Designation,
                                   'username'=>$request->firstname,'contact_no'=>$request->mobile,
@@ -719,6 +716,8 @@ public function AddEmployee()
                        ->where("employee_creation_id","1")
                        ->groupBy("empID")
                        ->orderByDesc("id")->first();
+
+                    //    echo json_encode($id);die();
         $countable_var=1;
         foreach($request->emp_id as $emp_id){
             $data[]=array('old_empID'=>$emp_id['empID'],

@@ -3897,26 +3897,29 @@ class GoalsController extends Controller
         if ($request->ajax()) {
         $result = $this->goal->gethr_list_tab_record($input_details);
         // echo "<pre>";print_r($result['textbox']);die;
-
         return DataTables::of($result)
             ->addIndexColumn()
             ->addColumn('status', function($row) {
                 // echo "<pre>";print_r($row);die;
                 if($row->goal_status == "Pending"){
                     $btn = '<button class="btn btn-danger btn-xs goal_btn_status" type="button">'.$row->goal_status.'</button>' ;
-
                 }elseif($row->goal_status == "Revert"){
                     $btn = '<button class="btn btn-primary btn-xs goal_btn_status" type="button">'.$row->goal_status.'</button>' ;
-
                 }elseif($row->goal_status == "Approved"){
                     $btn = '<button class="btn btn-success btn-xs goal_btn_status" type="button">'.$row->goal_status.'</button>' ;
-
                 }
-
                 return $btn;
             })
+            /*action button for CTC */
+            /*->addColumn('action', function($row) {
+                   $btn='<a onclick="employee_ctc_pdf_generate('."'".$row->created_by."'".');" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Profile" type="button" style="width: 15%;height: 35px;"></a>';
+
+                    return $btn;
+            ->rawColumns(['status','action'])
+                })*/
             ->rawColumns(['status'])
             ->make(true);
+
         }
     }
 /*after cick in hr submit button*/

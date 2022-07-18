@@ -301,7 +301,7 @@
                   <div class="form-row">
                   <div class="col-md-4 mb-3">
                         <label for="p_email">CTC Proposed</label>
-                        <input class="form-control" id="ctc_proposed" name="ctc_proposed" type="text" placeholder="CTC Proposed">
+                        <input class="form-control" id="ctc_proposed" onkeypress="return isNumber(event)" name="ctc_proposed" type="text" placeholder="CTC Proposed">
                         <span class="text-danger color-hider" id="ctc_proposed_error"  style="display:none;color: red;"></span>
                      </div>
                   <div class="col-md-4 mb-3">
@@ -367,5 +367,17 @@
 <script src="../assets/pro_js/Add_employee.js"></script>
 <script>
    var emp_info=@json($user_info['employee']);
+   /*only letters*/
+$(document).ready(function(){
+    $(".alpha").keydown(function(event){
+        var inputValue = event.which;
+        if(!(inputValue >= 65 && inputValue <= 123) &&/*letters,white space,tab*/
+         (inputValue != 32 && inputValue != 0) &&
+         (inputValue != 48 && inputValue != 8)/*backspace*/
+         && (inputValue != 9)/*tab*/) {
+            event.preventDefault();
+        }
+    });
+});
 </script>
 @endsection
