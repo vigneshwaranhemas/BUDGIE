@@ -865,8 +865,8 @@ function profile_info_process(id){
              $('#email').html(data['profile'].email);
              $('#blood_grp').html(data['profile'].blood_grp);
              $('#dob').html(dob);
-             console.log('sdh');
-             console.log(data['profile']);
+             // console.log('sdh');
+             // console.log(data['profile']);
              if (data['profile'].language !="") { 
                var test=JSON.parse(data['profile'].language); 
                $("#language").val(test).select2(); 
@@ -1506,6 +1506,7 @@ $("#v-pills-Family-tab").on('click', function() {
     family_information();
 });
 
+
 function family_information(){
     $.ajax({
         url: family_information_get_link,
@@ -1587,3 +1588,41 @@ $('#add_family_unit').submit(function(e) {
         },
     });
 });
+
+$("#v-pills-followup-tab").on('click', function() {
+    followup_information();
+});
+
+function followup_information(){
+    $.ajax({
+        url: followup_information_link,
+        method: "POST",
+        data:{},
+        dataType: "json",
+        success: function(data) {
+            if (data !="") {
+                    html ='';
+                for (let index = 0; index < data.length; index++) {
+           var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+            // console.log(data[index].Department)
+                    html +='<ul class="timeline">';
+                    html +=    '<li>';
+                    html +=     '<div class="direction-r">';
+                    html +=        '<div class="flag-wrapper">';
+                    html +=           '<h6 class="flag wbg">'+followup+'</h6>';
+                    html +=           '<br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department</h6>'+data[index].Department+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation</h6>'+data[index].Designation+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager</h6>'+data[index].sup_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name</h6>'+data[index].reviewer_name+'</h6><br>';
+                    html +=        '</div>';
+                    html +=     '</div>';
+                    html +=  '</li>';
+                    html += '</ul>';
+
+                };
+                $('#timeline_data').html(html);
+                }
+            }
+        });
+    }

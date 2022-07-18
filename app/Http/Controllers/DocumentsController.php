@@ -1106,5 +1106,13 @@ public function hr_working_information(Request $request){
         $grade_result = $this->profrpy->get_grade_data();
         return response()->json( $grade_result );
     }
+    /*get followup list*/
+    public function followup_information(){
+         $session_val = Session::get('session_info');
+         $emp_ID = $session_val['empID'];
+
+        $followup_result = $this->profrpy->followup_information_data($emp_ID);
+        return response()->json( $followup_result );
+    }
 
 }

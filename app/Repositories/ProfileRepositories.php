@@ -386,6 +386,15 @@ class ProfileRepositories implements IProfileRepositories
       DB::table($table)->insert($input_details);
       // dd(DB::getQueryLog());
    }
+   public function followup_information_data( $input_details){
+    // DB::enableQueryLog();
+       $bandtbl = DB::table('department_followup_details')
+                        ->select('*')
+                        ->where('emp_id',$input_details)
+                        ->get();
+        return $bandtbl;
+      // dd(DB::getQueryLog());
+   }
      
 
 }

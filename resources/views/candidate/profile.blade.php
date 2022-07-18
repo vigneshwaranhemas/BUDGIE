@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../assets/css/croppie.css"/>
 <script src="../assets/js/cropper.js"></script>
 <link href="../assets/css/select2.css" rel="stylesheet">
+<link href="../assets/css/followup.css" rel="stylesheet">
 <link rel='stylesheet' href='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'>
 
 @endsection
@@ -224,6 +225,7 @@ max-width: 1000px !important;
                      <a class="nav-link" id="v-pills-Experience-tab" data-toggle="pill" href="#v-pills-Experience" role="tab" aria-controls="v-pills-Experience" aria-selected="false">Experience</a>
                      <a class="nav-link" id="v-pills-Documents-tab" data-toggle="pill" href="#v-pills-Documents" role="tab" aria-controls="v-pills-Documents" aria-selected="false">Other Documents</a>
                      <a class="nav-link" id="v-pills-Family-tab" data-toggle="pill" href="#v-pills-Family" role="tab" aria-controls="v-pills-Family" aria-selected="false">Family</a>
+                     <a class="nav-link" id="v-pills-followup-tab" data-toggle="pill" href="#v-pills-followup" role="tab" aria-controls="v-pills-followup" aria-selected="false">Follow Up</a>
 
                   </div>
                   <br>
@@ -1445,6 +1447,19 @@ max-width: 1000px !important;
                   </div>
                   <!-- Pop-up div Ends-->
                </div>
+               <!-- Followup -->
+               <div class="tab-pane fade" id="v-pills-followup" role="tabpanel" aria-labelledby="v-pills-followup-tab">
+                  <nav class="navbar navbar-light bg-primary rounded">
+                    <span class="navbar-brand mb-0 h1" style="color:white;">Followup</span>
+                  </nav>
+                  <br>
+                  <!-- The Timeline -->
+                  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+                  <div id="timeline_data">
+                     
+                  </div>
+                  <!--  -->
+               </div>
                <!-- Pop-up div image upload-->
                <div class="modal fade" id="profile_image" tabindex="-1" role="dialog" aria-labelledby="profile_imageLabel" aria-hidden="true">
                    <div class="modal-dialog" role="document">
@@ -1651,6 +1666,7 @@ $("#age_can").inputFilter(function(value) {
    var remove_slide_pay_doc_link = "{{url('remove_slide_pay_doc')}}";
    var get_qualification_link = "{{url('get_qualification_list')}}";
    var get_course_link = "{{url('get_course')}}";
+   var followup_information_link = "{{url('followup_information')}}";
 
 
  </script>
