@@ -443,7 +443,7 @@ Route::get('id_card_varification', 'CommonController@id_card_varification');
 Route::get('hr_id_card_verification', 'CommonController@hr_id_card_verification');
 Route::post('hr_get_id_card_vari', 'CommonController@hr_get_id_card_vari');
 Route::post('hr_idcard_verfi', 'CommonController@hr_idcard_verfi');
-Route::post('hr_id_remark', 'CommonController@hr_id_remark');
+Route::post('hr_id_remark', 'CommonController@hr_id_remark');   
 
 // People
 Route::get('people', 'PeopleController@people')->name('people');

@@ -14,8 +14,13 @@ use Session;
 use Validator;
 use Mail;
 use App\Models\UserActivityModel;
+use PDF;
+use setasign\Fpdi\Fpdi;
+use setasign\Fpdf\Fpdf;
+
 class CommonController extends Controller
 {
+    // protected $fpdf;
     public function id_card_varification(){
            return view('id_card_verification');
     }public function pms_conformation(){
@@ -32,6 +37,7 @@ class CommonController extends Controller
             return view('my_team');
     }
     public function __construct(IAdminRepository $admrpy,IProfileRepositories $profrpy,ICommonRepositories $cmmrpy){
+        // $this->fpdf = new Fpdf;
         $this->admrpy = $admrpy;
         $this->profrpy = $profrpy;
         $this->cmmrpy = $cmmrpy;
@@ -325,7 +331,90 @@ class CommonController extends Controller
                     });
                 /*email end*/
 
-                return response()->json(['response'=>'Update']);
+            // ID Card pdf generator start
+            $info = [
+                "emp_code" => $request->input('emp_code'),
+                'f_name'=>$request->input('f_name'),
+                'emp_num_1'=>$request->input('emp_num_1'),
+                'doj'=>$request->input('doj'),
+                'blood_grp'=>$request->input('blood_grp'),
+                'official_email'=>$request->input('official_email'),
+            ];
+            // echo '<pre>';print_r($info);die();            
+            $pdf = new Fpdi();
+        
+            // set the source file
+            $path = public_path("ID_Card_1.pdf");
+            $pageCount = $pdf->setSourceFile($path);
+        
+            $pdf->setSourceFile($path);
+
+            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {                  
+                // import page
+                if($pageNo == 1)
+                {
+                    // add a page 
+                    $pdf->AddPage();
+                    $pdf->SetFont('Arial','B',14);
+                    $tplId = $pdf->importPage($pageNo);
+                    // use the imported page and place it at point 10,10 with a width of 100 mm
+                    $pdf->useTemplate($tplId, null, null, null, 210, true);
+                    $image = public_path('sample_id_card.png');
+                    // For image size(image_path, left, bottom, width, height)
+                    $pdf->Image($image, 5, 48, 130, 120);
+
+                    // $pdf->SetXY(200, 180);
+                    // $pdf->Write(0.8,"PREETHI A");      
+
+                    // Set font 
+                    $pdf->SetFont('Arial','B',20);
+                    $pdf->SetXY(10,170);
+                    $pdf->Cell(0,11,''.$info['f_name'].'',0,0,'C');
+                    
+                    $pdf->SetFont('Arial','B',15);
+                    $pdf->SetXY(10,178);
+                    $pdf->Cell(0,11,''.$info['emp_code'].'',0,0,'C');
+                }elseif($pageNo == 2)
+                {
+                    // add a page 
+                    $pdf->AddPage();
+                    $pdf->SetFont('Arial','B',14);
+                    $tplId = $pdf->importPage($pageNo);
+                    $pdf->useTemplate($tplId, null, null, null, 210, true);
+
+                    // Set font 
+                    $pdf->SetFont('Arial','B',30);
+                    $pdf->SetXY(10,20);
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->Cell(0,11,''.$info['emp_num_1'].'',0,0,'C');
+
+                    // Set font 
+                    $pdf->SetFont('Arial','B',20);
+                    $pdf->SetXY(28,32);
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->Cell(0,11,''.$info['doj'].'',0,0,'C');
+
+                    // Set font                 
+                    $pdf->SetFont('Arial','B',20);
+                    $pdf->SetXY(30,44);
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->Cell(0,11,''.$info['blood_grp'].'',0,0,'C');
+
+                    // Set font 
+                    $pdf->SetFont('Arial','B',16);
+                    $pdf->SetXY(40,55);
+                    $pdf->SetTextColor(255, 255, 255);
+                    $pdf->Cell(0,11,''.$info['official_email'].'',0,0,'C');
+                }
+            
+        }
+
+            // Preview PDF (F for save)
+            $pdf->Output('F','ID_card_pdf/'.$info['emp_code'].'.pdf');
+
+            // ID Card pdf generator End
+
+            return response()->json(['response'=>'Update']);
         /*}else{
             return response()->json(['error'=>$validator->errors()->toArray()]);
             }*/
@@ -932,4 +1021,6 @@ public function remove_display_image()
         // echo "<pre>";print_r($result);die;
         echo json_encode($result);
     }
+
+    
 }
