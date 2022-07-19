@@ -129,7 +129,6 @@ class CandidateController extends Controller
 
     public function welcome_aboard()
     {
-        
         return view('candidate.welcome_aboard');
     }
     public function view_welcome_aboard()
@@ -607,13 +606,10 @@ public function get_policy_information_candidate_details(Request $req){
      public function save_medical_form(Request $request){
         $sess_info=Session::get("session_info");
         $cdID=$sess_info['empID'];
-
          $insurance_name = $request->input( 'insur_name' );
          $insurance_name_json = json_encode($insurance_name);
-
          $relation_name = $request->input( 'relation' );
          $relation_name_json = json_encode($relation_name);
-
          $dob = $request->input( 'dob' );
          $dob_json = json_encode($dob);
 

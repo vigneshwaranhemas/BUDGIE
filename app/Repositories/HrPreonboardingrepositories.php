@@ -67,12 +67,8 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                             "customusers.email","customusers.contact_no",
                             "customusers.Induction_mail","customusers.Buddy_mail",
                             "customusers.payroll_status","customusers.doc_status",'candidate_other_infos.Id_status')->get();
-  
          return $result;
     }
-
-
-
     public function get_email_info(Type $var = null)
     {
         $result=Email_InfoModel::get();
@@ -107,7 +103,7 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                    $result=CustomUser::where("empID",$data1["empID"])->update($data2);
                    if($result)
                    {
-                      $induction_info=Candidate_seating_and_email_request::join('customusers','customusers.empID','=','Candidate_seating_and_email_requests.empID')
+                      $induction_info=Candidate_seating_and_email_request::join('customusers','customusers.empID','=','candidate_seating_and_email_requests.empID')
                                                                            ->where("customusers.empID",$data["empId"])
                                                                            ->select("customusers.username",
                                                                                     "customusers.HR_Recruiter",
@@ -183,7 +179,7 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                                                <td>".$email_info['email']."</td>
                                                <td class='text-center'><input type='hidden' value=0></td>
                                                <td><input type='text' class='form-control tdtextwidth'></td>
-                                               <td><select class='form-control'>
+                                               <td><select class='js-example-basic-multiple col-sm-12' multiple='multiple'>
                                                        <option value=0>Choose</option>
                                                        <option value='Laptop'>Laptop</option>
                                                        <option value='Desktop'>Desktop</option>
@@ -312,7 +308,7 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                $result=CustomUser::where("empID",$data1["empID"])->update($data2);
                      if($result)
                      {
-                        $induction_info=Candidate_seating_and_email_request::join('customusers','customusers.empID','=','Candidate_seating_and_email_requests.empID')
+                        $induction_info=Candidate_seating_and_email_request::join('customusers','customusers.empID','=','candidate_seating_and_email_requests.empID')
                                                                              ->where("customusers.empID",$data["empId"])
                                                                              ->select("customusers.username",
                                                                                       "customusers.HR_Recruiter",
@@ -348,16 +344,22 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                                          );
                                          Candidate_Other_infoModel::where('empID',$data1['empID'])
                                          ->update(['empID'=>$data['empId'],'Id_status'=>'1']); 
-                                        //  DB::table('candidate_account_information')->where('emp_id',$data1['empID'])
-                                        //    ->update(['emp_id'=>$data['empId']]);
-                                        //  DB::table('candidate_education_details')->where('emp_id',$data1['empID'])
-                                        //    ->update(['emp_id'=>$data['empId']]);
-                                        //  DB::table('candidate_experience_details')->where('empID',$data1['empID'])
-                                        //    ->update(['empID'=>$data['empId']]);
-                                        //  DB::table('candidate_family_information')->where('emp_id',$data1['empID'])
-                                        //    ->update(['emp_id'=>$data['empId']]);
-                                        //  DB::table('documents')->where('emp_id',$data1['empID'])
-                                        //    ->update(['emp_id'=>$data['empId']]);  
+                                         DB::table('candidate_contact_information')->where('emp_id',$data1['empID'])
+                                         ->update(['emp_id'=>$data['empId']]);  
+                                         DB::table('candidate_account_information')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);
+                                         DB::table('candidate_education_details')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);
+                                         DB::table('candidate_experience_details')->where('empID',$data1['empID'])
+                                           ->update(['empID'=>$data['empId']]);
+                                         DB::table('candidate_family_information')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);
+                                         DB::table('documents')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);  
+                                         DB::table('candidate_banner_image')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);   
+                                         DB::table('images')->where('emp_id',$data1['empID'])
+                                           ->update(['emp_id'=>$data['empId']]);    
                    }
         }
        return $final_info;

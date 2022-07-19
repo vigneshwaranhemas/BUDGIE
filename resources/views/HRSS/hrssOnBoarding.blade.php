@@ -42,7 +42,7 @@
         <div class="col-sm-12">
             <div class="card">
                <div class="card-body">
-                <button class="btn btn-primary float-right"  style="display:none;" id="GenIdBtn">Create EmployeeID<i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button class="btn btn-primary float-right"  style="display:none; margin-bottom: 16px;" id="GenIdBtn">Create EmployeeID <i class="fa fa-plus" aria-hidden="true"></i></button>
                   <div class="dt-ext table-responsive">
                     <table class="display" id="export-button">
                         <thead>
@@ -127,7 +127,7 @@
                                                                  <a class="btn btn-secondary action-button" href="view_welcome_aboard_hr?id={{$info["empID"]}}"><i class="fa fa-eye" aria-hidden="true" style="margin-left: -17px;"></i><a>
                                                                </td>
                                                                <td>
-                                                                <a class="btn btn-warning action-button" href="../userdocuments?id={{Crypt::encrypt($info["empID"])}}"><i class="icon-save" style="margin-left: -17px;"></i><a>
+                                                                <a class="btn btn-warning action-button" href="userdocuments?id={{Crypt::encrypt($info["empID"])}}"><i class="icon-save" style="margin-left: -17px;"></i><a>
                                                                </td>
                                                            </tr>
                                                          <?php $i++;?>
@@ -185,7 +185,7 @@
           <div class="modal-body">
              <label>Are you sure to confirm the candidate is onboarded</label>
           </div>
-          <div cla ss="modal-footer">
+          <div class="modal-footer">
              <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
              <button class="btn btn-secondary" type="button" data-dismiss="modal" id="Candidate_Status_update">Save changes</button>
              <input type="hidden" id="can_hidden_id">
@@ -222,4 +222,4 @@
     var Candidate_status_update="{{url('Candidate_Status_Update')}}";
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../pro_js/Hrss/OnBoarding.js"></script>
+<script src="../pro_js/HRSS/OnBoarding.js"></script>

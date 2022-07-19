@@ -4,6 +4,8 @@
 @section('css')
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<link rel="stylesheet" type="text/css" href="../assets/css/select2.css">
+
 @endsection
 
 @section('style')
@@ -73,7 +75,9 @@
                                 <tbody>
                                     @if (count($email_info['pending'])>0)
                                         <?php $i=1;?>
+                                        
                                          @foreach ($email_info['pending'] as $info )
+         
                                               <tr>
                                                  <td>{{$i}}</td>
                                                  <td><input type='checkbox'></td>
@@ -82,7 +86,13 @@
                                                  <td>{{$info->email}}</td>
                                                  <td>{{$info->contact_no}}</td>
                                                  <td><input type="text" class="form-control" value="{{$info->hr_suggested_mail}}"></td>
-                                                 <td>{{$info->asset_type}}</td>
+                                                 <td>
+                                                 <select class='js-example-basic-multiple col-sm-12' multiple='multiple'>
+                                                       <option value=0>Choose</option>
+                                                       <option value="Laptop" @if(in_array('Laptop',json_decode($info->asset_type))) selected @endif>Laptop</option>
+                                                       <option value="Desktop" @if(in_array('Desktop',json_decode($info->asset_type))) selected @endif>Desktop</option>
+                                                   </select>
+                                                </td>
                                               </tr>
                                           <?php $i++; ?>
                                          @endforeach
@@ -159,11 +169,13 @@
 
 @section('script')
 
-
-
-@endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../pro_js/ITInfra/EmailCreationRequest.js"></script>
 <script>
     var it_url="ITInfra_Email_Creation";
 </script>
+<script src="../assets/js/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2/select2-custom.js"></script>
+<script src="../pro_js/ITInfra/EmailCreationRequest.js"></script>
+
+@endsection
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+

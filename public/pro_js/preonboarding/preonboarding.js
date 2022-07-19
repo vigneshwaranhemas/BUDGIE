@@ -29,22 +29,21 @@ $(()=>{
                    })
              });
              var token=$("#token").val();
-
-              console.log(onBoardData)
-
               $.ajax({
                    url:"PreOnBoarding_save",
-                   // url:"{{'PreOnBoarding_save'}}",
                    type:"POST",
                    data:{onboard:onBoardData,_token:token},
                    beforeSend:function(response)
                    {
-                        console.log(response);
+                        $("#SaveBtn").attr('disabled',true);
+                        $('#SaveBtn').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Processing');
                    },
                    success:function(data)
                    {
+                      $(".spinner-grow").remove();
+                      $("#SaveBtn").html("Submit");
+                      $('#SaveBtn').prop('disabled',false);
                       var res=JSON.parse(data);
-                      console.log(res)
                       if(res.type==1){
 
                              Toastify({

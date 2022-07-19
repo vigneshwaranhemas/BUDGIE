@@ -60,12 +60,9 @@
                                 @else
                                             @if ($userdata['user_info'][$i]->date!="")
                                             <?php $date=$userdata['user_info'][$i]->date;
-                                                // $disabled="";
                                             ?>
-
                                                 @else
                                                 <?php   $date="" ;
-                                                    // $disabled="disabled";
                                                 ?>
                                                 @endif
 
@@ -73,8 +70,6 @@
                                         <?php
                                          $checked="checked";
                                          $disabled="";
-
-
                                         ?>
                                         @else
                                         <?php

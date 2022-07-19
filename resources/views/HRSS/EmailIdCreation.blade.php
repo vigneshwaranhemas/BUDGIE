@@ -4,6 +4,8 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{url('assets/css/datatables.css')}}">
 <link rel="stylesheet" type="text/css" href="{{url('assets/css/datatable-extension.css')}}">
+<link rel="stylesheet" type="text/css" href="../assets/css/select2.css">
+
 
 @endsection
 
@@ -67,13 +69,14 @@
 </div>
 @endsection
 @section('script')
-
+<script>
+    var email_url="Candidate_Email_Creation";
+    var status_update_url="Candidate_Email_Status_update";
+</script>
+<script src="../assets/js/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2/select2-custom.js"></script>
+<script src="../pro_js/HRSS/CandidateEmailCreation.js"></script>
 
 @endsection
 
-    <script>
-    var email_url="Candidate_Email_Creation";
-    var status_update_url="Candidate_Email_Status_update";
-    </script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
-    <script src="../pro_js/HRSS/CandidateEmailCreation.js"></script>
+  
