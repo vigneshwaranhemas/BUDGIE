@@ -59,18 +59,18 @@ $sess_info=Session::get("session_info");
                         <p>Buddy Assigned </p>
                     </div>
                     <div class="col-md-3" style="margin-left: -53px;">
-                            <p>: {{$buddy_fields['user_info']->empID}} </p>
-                            <p>: {{$buddy_fields['user_info']->username}}</p>
-                            <p>: {{$buddy_fields['user_info']->department}} </p>
-                            <p>: {{$buddy_fields['user_info']->designation}}</p>
-                            <p>: {{$buddy_fields['user_info']->doj}}</p>
-                            <p>: {{$buddy_fields['user_info']->worklocation}}</p>
-                            <p>: {{$buddy_fields['user_info']->buddy_name}}</p>
+                            <p>: @if(isset($buddy_fields['user_info']->empID))    {{$buddy_fields['user_info']->empID}}            @endif</p>
+                            <p>: @if(isset($buddy_fields['user_info']->username)) {{$buddy_fields['user_info']->username}}         @endif</p>
+                            <p>: @if(isset($buddy_fields['user_info']->department)) {{$buddy_fields['user_info']->department}}     @endif </p>
+                            <p>: @if(isset($buddy_fields['user_info']->designation)) {{$buddy_fields['user_info']->designation}}   @endif </p>
+                            <p>: @if(isset($buddy_fields['user_info']->doj)) {{$buddy_fields['user_info']->doj}}                   @endif  </p>
+                            <p>: @if(isset($buddy_fields['user_info']->worklocation)) {{$buddy_fields['user_info']->worklocation}} @endif</p>
+                            <p>: @if(isset($buddy_fields['user_info']->buddy_name)) {{$buddy_fields['user_info']->buddy_name}}     @endif</p>
                     </div>
 
                   </div>
                   <div class="modal-body" style="margin-left: -14px;">
-                    <table class="table table-custom dtable-striped table-bordered" style="width: max-content;" id="buddy_feedbacktable">
+                    <table class="table table-custom dtable-striped table-bordered" id="buddy_feedbacktable">
                         <thead>
                           <tr>
                             <th scope="col" rowspan="2">S.No</th>
@@ -198,7 +198,8 @@ $sess_info=Session::get("session_info");
 </div>
 
 @endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+@section('script')
 <script src="../pro_js/preonboarding/preonboarding.js"></script>
 <script>
 
@@ -222,4 +223,7 @@ function checkbox_validator(one,two){
 
 
 </script>
+@endsection
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
 

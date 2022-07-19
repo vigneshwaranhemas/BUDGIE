@@ -112,7 +112,7 @@
                      </div>                   
                      <div class="col-md-4 mb-3">
                         <label for="emp_num_1">RFH</label>
-                        <input class="form-control alpha"  id="RFH" name="RFH" type="text" value="" placeholder="RFH    " >
+                        <input class="form-control"  id="RFH" name="RFH" type="text" value="" placeholder="RFH    " >
                         <span class="text-danger color-hider" id="RFH_error"  style="display:none;color: red;"></span>
                      </div>
                      <div class="col-md-4 mb-3">

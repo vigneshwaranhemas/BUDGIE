@@ -9,9 +9,13 @@ $(()=>{
             type:"POST",
             data:$("#AddEmployeeForm").serialize()+ "&supervisor=" +supervisor_id +"&reviewer=" +reviewer_id  +"&role=" +role,
             beforeSend:(data)=>{
-                console.log("Loading!..")
+                $("#AddEmployeeBtn").attr('disabled',true);
+                $('#AddEmployeeBtn').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Processing');
             },
             success:(response)=>{
+                $(".spinner-grow").remove();
+                $("#AddEmployeeBtn").html("Submit");
+                $('#AddEmployeeBtn').prop('disabled',false);
                 $(".color-hider").hide();
                 if(response.error)
                 {

@@ -339,8 +339,8 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="col-md-12 text-center">
-                                        @if(isset($candidate_info['other_doc']->Relieving_letter))
-                                            <a href="{{ url('payslip') }}"><button class="btn btn-primary" type="button">View</button></a>
+                                        @if(isset($candidate_info['epf_form']))
+                                            <a href="{{ url('epf_form/'.$candidate_info['epf_form']->cdID.'/'.$candidate_info['epf_form']->file_name.'') }}"><button class="btn btn-primary" type="button">View</button></a>
                                         @endif
                                         </div>
                                     </div>
@@ -356,8 +356,25 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="col-md-12 text-center">
-                                        @if(isset($candidate_info['other_doc']->Relieving_letter))
-                                            <a href="{{ url('payslip') }}"><button class="btn btn-primary" type="button">View</button></a>
+                                        @if(isset($candidate_info['medical_insurance']))
+                                            <a href="{{ url('medical_insurance/'.$candidate_info['medical_insurance']->cdID.'/'.$candidate_info['medical_insurance']->file_name.'')}}"><button class="btn btn-primary" type="button">View</button></a>
+                                        @endif
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-4">
+                            <div class="card">
+                                    <div class="card-header">
+                                        <h5>Welcome Aboard</h5>
+                                        <div class="card-header-right">
+                                            <i class="fa fa-file-text"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-md-12 text-center">
+                                        @if(isset($candidate_info['view_onboard']))
+                                            <a href="{{ url('view_welcome_aboard_hr?id='.$candidate_info['view_onboard']->created_by.'')}}"><button class="btn btn-primary" type="button">View</button></a>
                                         @endif
                                         </div>
                                     </div>
@@ -396,5 +413,5 @@
 <script>
     var DocumentStatusurl="DocumentStatusUpdate";
 </script>
-<script src="../pro_js/Hrss/OnBoarding.js"></script>
+<script src="../pro_js/HRSS/OnBoarding.js"></script>
 @endsection

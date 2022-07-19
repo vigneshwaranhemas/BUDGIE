@@ -24,6 +24,9 @@ use App\Models\Candidate_Other_infoModel;
 use App\candidate_education_details;
 use App\Models\candidate_experience_details;
 use App\Models\Candidate_seating_and_email_request;
+use App\Models\Medical_insurance;
+use App\Models\Epf_Forms;
+use App\welcome_aboard;
 
 class HrController extends Controller
 {
@@ -144,10 +147,15 @@ class HrController extends Controller
         $education_info=candidate_education_details::where('emp_id',$id)->get(); 
         $experience_info=candidate_experience_details::where('empID',$id)->get();
         $other_doc = DB::table('documents')->select('*')->where('emp_id',$id)->first();
+        $medical_insurance=Medical_insurance::where('cdID',$id)->first();
+        $epf_form=Epf_Forms::where('cdID',$id)->first();
         $candidate_info['education_info']=$education_info;
         $candidate_info['experience_info']=$experience_info;
         $candidate_info['other_doc']=$other_doc;   
         $candidate_info['doc_status']=CustomUser::where('empID',$id)->select('doc_status','empID')->first();
+        $candidate_info['medical_insurance']=$medical_insurance;
+        $candidate_info['epf_form']=$epf_form;
+        $candidate_info['view_onboard']=welcome_aboard::where('created_by',$id)->first();
         return view('HRSS.userdocuments')->with('candidate_info',$candidate_info);
     }
     public function Show_preOnBoarding(Request $request)
@@ -247,7 +255,12 @@ class HrController extends Controller
             $ItInfra_email_info=$this->hpreon->get_itinfra_email_info();
 
             foreach($request->info as $data){
-                 $candidate_info=$this->hpreon->candidate_info_for_EmailCreation($data);
+         
+                   $email_array=array('empID'=>$data['empID'],
+                                      'status'=>$data['status'],
+                                      'hr_suggested_mail'=>$data['hr_suggested_mail'],
+                                      'asset_type'=>json_encode($data['asset_type']));
+                 $candidate_info=$this->hpreon->candidate_info_for_EmailCreation($email_array);
 
 //
 // --------------------------------------------------------------------------------------------------
@@ -309,17 +322,18 @@ class HrController extends Controller
         $width1     = 320;
         $height1      = 400;
 
-        $id_card_image = Image::make(public_path('ID_card_photo/'. $id .'.JPG'))->resize($width1, $height1);
-        // print_r($id_card_image);die();
+       $lines = explode("\n", wordwrap($text, $max_len));
+       $y     = $center_y - ((count($lines) - 1) * $font_height);
 
-        $lines = explode("\n", wordwrap($text, $max_len));
-        $y     = $center_y - ((count($lines) - 1) * $font_height);
+       // $image   = Image::canvas($width, $height, '#ffffff');
+       $image   = Image::make(public_path('/assets/images/image_generator/welcome_aboard_background_image.png'))->resize($width, $height);
 
-        // $image   = Image::canvas($width, $height, '#ffffff');
-        $image   = Image::make(public_path('/assets/images/image_generator/welcome_aboard_background_image.png'))->resize($width, $height);
-
-        $image->insert($id_card_image, 'left', 95, 4000, 5200, 6700);
-
+       if(file_exists(public_path('ID_card_photo/'. $id .'.png')))
+       {
+            $id_card_image = Image::make(public_path('ID_card_photo/'. $id .'.png'))->resize($width1, $height1);
+            // print_r($id_card_image);die();
+            $image->insert($id_card_image, 'left', 95, 4000, 5200, 6700);
+       }
         foreach ($lines as $line)
         {
             $image->text($line, $center_x, $y, function($font) use ($font_size){
@@ -641,10 +655,8 @@ public function AddEmployee()
               'Buddy.required'               =>'Buddy is required' 
               ]);
               if($validator->passes()){
-                  $table_max_id=DB::select("SELECT `auto_increment` FROM INFORMATION_SCHEMA.TABLES
-                  WHERE table_name = 'customusers'");
-                    //  $table_max_id=DB::select("SELECT max(id) from customusers");
-                  $emp_id="CAND".($table_max_id[0]->auto_increment)."";
+                $table_max_id=CustomUser::max('id');
+                $emp_id="CAND".($table_max_id+1)."";
                   $emp_data=array('department'=>$request->Department,'designation'=>$request->Designation,
                                   'username'=>$request->firstname,'contact_no'=>$request->mobile,
                                   'p_email'=>$request->personal_email,'grade'=>$request->grade,
