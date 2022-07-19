@@ -39,6 +39,16 @@ class CommonRepositories implements ICommonRepositories
            // dd(DB::getQueryLog());
             return $bandtbl;
     }
+    public function get_myteam_info_view( $input_details ){
+      
+          
+            $bandtbl['profile'] = DB::table('customusers')
+                        ->select('*')
+                        ->where('empID', '=', $input_details['empID'])
+                        ->first();
+           // dd(DB::getQueryLog());
+            return $bandtbl;
+    }
     public function get_candidate_info_hr2( $input_details ){
         $bandtbl = DB::table('candidate_contact_information')
         ->select('*')
@@ -325,15 +335,20 @@ class CommonRepositories implements ICommonRepositories
                                 ->where('sup_emp_code',$id)
                                 ->orwhere('reviewer_emp_code',$id)
                                 ->get();
-
-        $supervisor['exp']=CustomUser::select(DB::raw("DATEDIFF(exp_start_month, exp_end_month) AS days"))
-        ->leftjoin('candidate_experience_details','customusers.empID' ,'=', 'candidate_experience_details.empID') 
-        ->where('sup_emp_code',$id)
-        ->orwhere('reviewer_emp_code',$id)
-        ->get();
-
         // dd(DB::getQueryLog());        
         return $supervisor;
+
+    }
+     public function my_team_experience($id){
+        // DB::enableQueryLog();
+       $exp['exp']=CustomUser::select(DB::raw("DATEDIFF(exp_start_month, exp_end_month) AS days"))
+                                ->leftjoin('candidate_experience_details','customusers.empID' ,'=', 'candidate_experience_details.empID') 
+                                ->where('sup_emp_code',$id)
+                                ->orwhere('reviewer_emp_code',$id)
+                                ->groupBy('candidate_experience_details.empID')
+                                ->get();
+        // dd(DB::getQueryLog());        
+        return $exp;
 
     }
     public function pms_submit($id,$val){

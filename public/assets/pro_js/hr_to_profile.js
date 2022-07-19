@@ -68,7 +68,6 @@ function get_worklocation() {
         data:{},
         dataType: "json",
         success: function(data) {
-             console.log(data[2].worklocation)
             var html = '<option value="">Select Work Location</option>';
             for (let index = 0; index < data.length; index++) {
                 html += "<option value='" + data[index].worklocation+ "'>" + data[index].worklocation+ "</option>";
@@ -1032,15 +1031,15 @@ function documents_info(){
     var params = new window.URLSearchParams(window.location.search);
     var id=params.get('id')
     var empID=params.get('empID')
+    
     $.ajax({
         url: documents_info_link,
         method: "POST",
         data:{"id":id,"empID":empID},
         dataType: "json",
         success: function(data) {
-            // console.log(data)
+            // console.log(data[0].passport_photo)
                 if (data !="") {
-
                     // $("#document_button").hide();
 
                     if (data[0].passport_photo !="") {

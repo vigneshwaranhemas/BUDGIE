@@ -26,8 +26,15 @@
 @endsection
 
 @section('content')
+<!-- <div class="container-fluid">
+   <div class="row" id="my_teams">
+   </div>
+   <div class="card-footer row" id="exp_information">
+   </div>
+</div> -->
 <div class="container-fluid">
    <div class="row" id="my_teams">
+      
    </div>
 </div>
 @endsection
@@ -42,6 +49,7 @@
     });
 
     var my_team_tl_link = "{{url('my_team_tl_info')}}";
+    var my_team_experience_info_link = "{{url('my_team_experience_info')}}";
 </script>
 
 @endsection

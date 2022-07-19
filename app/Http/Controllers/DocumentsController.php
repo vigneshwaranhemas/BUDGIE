@@ -243,14 +243,14 @@ class DocumentsController extends Controller
         $session_val = Session::get('session_info');
         $emp_ID = $session_val['empID'];
         $input_details = array( "emp_ID" => $emp_ID, );
-        $get_documents_result = $this->admrpy->get_table('documents', $input_details );
+        $get_information_result = $this->admrpy->get_table('documents', $input_details );
         // echo "string";print_r($get_documents_result);die;
-        return response()->json( $get_documents_result );  
+        return response()->json( $get_information_result );  
     }
     public function doc_information_hr(Request $request){
 
-        // echo "string";print_r($request->empID);die;
         
+        // echo "<pre>";print_r($request->all());die;
         // $emp_ID = $session_val['empID'];
         $input_details = array( "emp_ID" => $request->empID, );
         $get_documents_result = $this->admrpy->get_table('documents', $input_details );
@@ -613,6 +613,14 @@ class DocumentsController extends Controller
         $emp_id = $session_val['empID'];
         $input_details = array( "cdID" => $cdID, 
                                    "emp_id" => $emp_id  );
+        $Contact_info_result = $this->profrpy->Contact_info( $input_details );
+        // echo "<pre>";print_r($Contact_info_result);die;
+        return response()->json( $Contact_info_result );
+        
+    }
+    public function Contact_info_view_myteam(Request $request){
+        $cdID ="";
+        $input_details = array( "cdID" => $cdID, "emp_id" => $request->emp_id  );
         $Contact_info_result = $this->profrpy->Contact_info( $input_details );
         // echo "<pre>";print_r($Contact_info_result);die;
         return response()->json( $Contact_info_result );

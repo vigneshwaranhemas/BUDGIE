@@ -934,13 +934,14 @@ max-width: 1000px !important;
                <!-- Other Documents -->
                <div class="tab-pane fade" id="v-pills-Documents" role="tabpanel" aria-labelledby="v-pills-Documents-tab">
                   <nav class="navbar navbar-light bg-primary rounded">
-                    <span class="navbar-brand mb-0 h1">Other Documents</span>
+                    <span class="navbar-brand mb-0 h1" style="color:white;">Other Documents</span>
                     <!-- <h4><i data-target="#add_document" >+ Add Document</i></h4> -->
+                     <button id="document_button" class="btn btn-success" type="button" data-toggle="modal" data-original-title="test" data-target="#docModal" >+ Add Document</button>
                   </nav>
                   <br>
                      <!-- <div id="testing">
                      </div> -->
-                      <div class='card-body'> 
+                  <div class='card-body'> 
                      <div class='row people-grid-row'> 
                         <div class='col-md-3 col-lg-3 col-xl-4'> 
                            <div class='card'> 
@@ -1112,6 +1113,96 @@ max-width: 1000px !important;
                        </div>
                     </div> 
                   </div>
+                     <!-- Pop-up div starts-->
+                  <div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="docModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="docModalLabel">Add Mandatory Documents</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                              <form method="POST" action="javascript:void(0)" id="add_documents_unit" class="ajax-form" enctype="multipart/form-data">
+                                  {{ csrf_field() }}
+                                <div class="modal-body">
+                                    <div class="form-row">
+                                       <div class="col-sm-4 mb-3">
+                                            <label>Recent Passport Size Photograph</label>
+                                            <input class="form-control" name="passport_photo" id="passport_photo" type="file" placeholder=""  aria-describedby="fileHelp" >
+                                             <span class="text-danger color-hider" id="passport_photo_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                       <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Updated Resume</label>
+                                        
+                                            <input class="form-control" name="Resume" id="Resume" accept=".doc,.docx,.xls,.xlsx,.pdf" type="file" placeholder=""  aria-describedby="fileHelp" >
+                                             <span class="text-danger color-hider" id="Resume_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                       <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Payslips/Bank Statement</label>
+                                        
+                                            <input class="form-control" name="Payslips" id="Payslips" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp" >
+                                             <!-- <small id="fileHelp" class="form-text text-muted">Please upload a valid file.</small> -->
+                                             <span class="text-danger color-hider" id="Payslips_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">PAN Card</label>
+                                        
+                                            <input class="form-control" name="pan" id="pan" accept=".doc,.docx,.pdf" type="file" placeholder=""  aria-describedby="fileHelp" >
+                                             <span class="text-danger color-hider" id="pan_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                       
+                                        
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Vaccination Certificate</label>
+                                       
+                                            <input class="form-control" name="Vaccination" id="Vaccination" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp" >
+                                             <span class="text-danger color-hider" id="Vaccination_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Signature</label>
+                                        
+                                            <input class="form-control" name="signature" id="signature" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="signature_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">DOB proof</label>
+                                        
+                                            <input class="form-control" name="dob_proof" id="dob_proof" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="dob_proof_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Blood Group Proof</label>
+                                        
+                                            <input class="form-control" name="blood_grp_proof" id="blood_grp_proof" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="blood_grp_proof_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Aadhaar Card</label>
+                                            <input class="form-control" name="aadhaar_card" id="aadhaar_card" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="aadhaar_card_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                         <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Front Page Of Your Bank Passbook (Or) Cancelled Cheque Leaf</label>
+                                            <input class="form-control" name="bank_passbook" id="bank_passbook" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="bank_passbook_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="documents_name">Relieving Letter/Resignation Acceptance Mail from Previous employer</label>
+                                            <input class="form-control" name="Relieving_letter" id="Relieving_letter" accept=".doc,.docx,.xls,.xlsx,.ppt,.pdf" type="file" placeholder=""  aria-describedby="fileHelp">
+                                             <span class="text-danger color-hider" id="Relieving_letter_error"  style="display:none;color: red;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" id="closebutton" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-secondary" type="submit" id="doc_Submit">Save</button>
+                                </div>
+                              </form>
+                        </div>
+                      </div>
+                  </div>
+                  <!-- Pop-up div Ends-->
                </div>
                <!-- Family -->
                <div class="tab-pane fade" id="v-pills-Family" role="tabpanel" aria-labelledby="v-pills-Family-tab">
