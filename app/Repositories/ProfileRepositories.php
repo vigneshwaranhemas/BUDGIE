@@ -380,26 +380,20 @@ class ProfileRepositories implements IProfileRepositories
         // dd(DB::getQueryLog());
          return $update_roletbl;
     }
-    public function insert_followup_department( $input_details ){
-         // echo "<pre>";print_r($input_details);       die; 
-      DB::table('department_followup_details')->insert(
-                 array(
-                           'Department' => $input_details['Department'],
-                           'Designation' => $input_details['Designation'],
-                           'emp_id' =>  $input_details['emp_id']
-                 )
-            );
+   
+   public function insert_followup_reviewer( $input_details,$table ){
+    // DB::enableQueryLog();
+      DB::table($table)->insert($input_details);
+      // dd(DB::getQueryLog());
    }
-   public function insert_followup_designation( $input_details ){
-    // echo "<pre>";print_r($input_details);       die; 
-        // DB::enableQueryLog();
-      DB::table('department_followup_details')->insert(
-                 array(     'Department' => $input_details['Department'],
-                           'Designation' => $input_details['Designation'],
-                           'emp_id' =>  $input_details['emp_id']
-                 )
-            );
-        // dd(DB::getQueryLog());
+   public function followup_information_data( $input_details){
+    // DB::enableQueryLog();
+       $bandtbl = DB::table('department_followup_details')
+                        ->select('*')
+                        ->where('emp_id',$input_details)
+                        ->get();
+        return $bandtbl;
+      // dd(DB::getQueryLog());
    }
      
 

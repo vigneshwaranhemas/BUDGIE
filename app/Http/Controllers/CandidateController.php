@@ -704,7 +704,4 @@ public function get_policy_information_candidate_details(Request $req){
     }
 
 
-
-
-
 }

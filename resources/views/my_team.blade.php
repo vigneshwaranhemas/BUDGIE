@@ -5,16 +5,24 @@
 @endsection
 
 @section('style')
+<style type="text/css">
+      span.italic {
+     font-style: italic;
+   }
+   /*span.small {
+  font-variant: small-caps;
+}*/
+</style>
 @endsection
 
 @section('breadcrumb-title')
-	<h2>My<span>Teams</span></h2>
+   <h2>My<span>Teams</span></h2>
 @endsection
 
 @section('breadcrumb-items')
-	<li class="breadcrumb-item">Apps</li>
+   <li class="breadcrumb-item">Apps</li>
    <li class="breadcrumb-item">User</li>
-	<li class="breadcrumb-item active">My Teams</li>
+   <li class="breadcrumb-item active">My Teams</li>
 @endsection
 
 @section('content')

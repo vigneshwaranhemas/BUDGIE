@@ -17,16 +17,18 @@ function get_user_list() {
             for (let index = 0; index < data.length; index++) {
                 html += '<div class="col-md-6 col-lg-6 col-xl-4 box-col-6">\
                  <div class="card custom-card">\
-                    <div class="card-header"><img class="img-fluid" src="../assets/images/user-card/1.jpg" alt=""></div>\
+                    <div class="card-header"><img class="img-fluid" src="'+data[index].banner_img+'" alt="" style="margin-top: 16px;"></div>\
                     <div class="card-profile"><img class="rounded-circle" src="'+data[index].img+'" alt=""></div>\
                     <div class="text-center profile-details">\
-                       <h4>'+data[index].name+'</h4>\
-                       <h6>'+data[index].txt+'</h6>\
+                       <span class="italic">'+data[index].name+'</span><br>\
+                       <span>'+data[index].id+'</span><br>\
+                       <span>'+data[index].txt+'</span><br>\
+                       <span>'+data[index].skill+'</span><br>\
                     </div>\
                     <div class="card-footer row">\
                        <div class="col-6 col-sm-6">\
-                          <h6>Follower</h6>\
-                          <h3 class="counter">9564</h3>\
+                          <h6>Experience</h6>\
+                          <h3 class="counter">'+data[index].exp+'</h3>\
                        </div>\
                        <div class="col-6 col-sm-6">\
                           <h6>Total Post</h6>\

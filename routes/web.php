@@ -443,7 +443,7 @@ Route::get('id_card_varification', 'CommonController@id_card_varification');
 Route::get('hr_id_card_verification', 'CommonController@hr_id_card_verification');
 Route::post('hr_get_id_card_vari', 'CommonController@hr_get_id_card_vari');
 Route::post('hr_idcard_verfi', 'CommonController@hr_idcard_verfi');
-Route::post('hr_id_remark', 'CommonController@hr_id_remark');
+Route::post('hr_id_remark', 'CommonController@hr_id_remark');   
 
 // People
 Route::get('people', 'PeopleController@people')->name('people');
@@ -675,3 +675,4 @@ Route::post('bh_sup_pms_checkbox_data_save','GoalsController@bh_sup_pms_checkbox
 
 Route::get('get_all_sup_info_bh','GoalsController@get_all_sup_info_bh');
 Route::post('employee_ctc_pdf_create','CtcController@employee_ctc_pdf_create');
+Route::post('followup_information','DocumentsController@followup_information');
