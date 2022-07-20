@@ -1195,12 +1195,20 @@ function followup_information(){
         success: function(data) {
             if (data !="") {
                     html ='';
+                    var verify_num=1;
+                    var verify_class="";
                 for (let index = 0; index < data.length; index++) {
-           var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
-            // console.log(data[index].Department)
+                var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+                     if(verify_num==1){
+                        verify_num=2;
+                        verify_class="direction-r";
+                     }else{
+                        verify_num=1;
+                        verify_class="direction-l";
+                     }
                     html +='<ul class="timeline">';
                     html +=    '<li>';
-                    html +=     '<div class="direction-r">';
+                    html +=     '<div class="'+verify_class+'">';
                     html +=        '<div class="flag-wrapper">';
                     html +=           '<h6 class="flag wbg">'+followup+'</h6>';
                     html +=           '<br>';
@@ -1212,7 +1220,6 @@ function followup_information(){
                     html +=     '</div>';
                     html +=  '</li>';
                     html += '</ul>';
-
                 };
                 $('#timeline_data').html(html);
                 }

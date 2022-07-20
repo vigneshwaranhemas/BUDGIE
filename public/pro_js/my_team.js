@@ -21,12 +21,12 @@ function get_user_list() {
                  <div class="card custom-card">\
                     <div class="card-header"><img class="img-fluid" src="'+data[index].banner_img+'" alt="" style="margin-top: 16px;"></div>\
                     <div class="card-profile"><img class="rounded-circle" src="'+data[index].img+'" alt=""></div>\
-                    <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Profile" type="button" style="width: 15%;height: 35px;"><a onclick=my_team_profile_view("'+data[index].id+'");><i class="pe-7s-id" style="color: #ffffff; margin-left:-5px;"></i></a></button>\
+                    <center><button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Profile" type="button" style="width: 15%;height: 35px;"><a onclick=my_team_profile_view("'+data[index].id+'");><i class="pe-7s-users" style="color: #ffffff; margin-left:-5px;"></i></a></button></center><br>\
                     <div class="text-center profile-details">\
                        <span class="italic">'+data[index].name+'</span><br>\
                        <span>'+data[index].id+'</span><br>\
                        <span>'+data[index].txt+'</span><br>\
-                       <span>'+data[index].skill+'</span><br>\
+                       <span>'+data[index].skill+'</span><br><br>\
                     </div>\
                  </div>\
               </div>';
