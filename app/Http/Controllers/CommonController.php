@@ -1069,10 +1069,25 @@ public function my_team_experience_info(Request $request){
         $education_result = $this->profrpy->family_info( $input_details );
         return response()->json( $education_result );
     }
+    public function Contact_info_view_myteam(Request $request){
+        $cdID ="";
+        $input_details = array( "cdID" => $cdID, "emp_id" => $request->emp_id  );
+        $Contact_info_result = $this->profrpy->Contact_info( $input_details );
+        // echo "<pre>";print_r($Contact_info_result);die;
+        return response()->json( $Contact_info_result );
+    }
+
     /*get followup list*/
     public function my_team_followup_information(Request $request){
          $emp_ID = $request['emp_id'];
         $followup_result = $this->profrpy->followup_information_data($emp_ID);
+        return response()->json( $followup_result );
+    }
+    /*get followup list*/
+    public function hr_followup_information(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $input_details = array( "emp_id" => $request->emp_id, );
+        $followup_result = $this->profrpy->hr_followup_information_data($input_details);
         return response()->json( $followup_result );
     }
 }

@@ -109,16 +109,13 @@ max-width: 1000px !important;
                <div class="img-container">
                   <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
                      <figure itemprop="associatedMedia" itemscope>
-                        <!-- <a href="../assets/images/other-images/profile-style-img3.png" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="../assets/images/other-images/profile-style-img3.png" itemprop="thumbnail" alt="gallery"></a> -->
                         <a class="avatar" itemprop="contentUrl" data-size="1600x950"><img width="1300" height="330" class="img-fluid rounded" itemprop="thumbnail" alt="" id="banner_img"></a>
-                        <!-- <div class="avatar" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" itemprop="thumbnail" alt="" id="banner_img" src=""></div> -->
                      </figure>
                   </div>
                </div>
                <div class="user-image">
-                  <div class="avatar slide" title="Delete">
+                  <div class="avatar slide">
                      <img id="profile_img" src="" >
-                     <button id="del" class="icofont icofont-delete-alt-5" style="display:none;"><i class="icofont icofont-basket" ></i></button>
                   </div>
                </div>
           

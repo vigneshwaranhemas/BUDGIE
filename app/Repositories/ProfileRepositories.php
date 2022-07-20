@@ -395,6 +395,15 @@ class ProfileRepositories implements IProfileRepositories
         return $bandtbl;
       // dd(DB::getQueryLog());
    }
+   public function hr_followup_information_data( $input_details){
+    // DB::enableQueryLog();
+       $bandtbl = DB::table('department_followup_details')
+                        ->select('*')
+                        ->where('emp_id',$input_details['emp_id'])
+                        ->get();
+        return $bandtbl;
+      // dd(DB::getQueryLog());
+   }
      
 
 }

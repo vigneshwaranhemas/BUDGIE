@@ -618,15 +618,7 @@ class DocumentsController extends Controller
         return response()->json( $Contact_info_result );
         
     }
-    public function Contact_info_view_myteam(Request $request){
-        $cdID ="";
-        $input_details = array( "cdID" => $cdID, "emp_id" => $request->emp_id  );
-        $Contact_info_result = $this->profrpy->Contact_info( $input_details );
-        // echo "<pre>";print_r($Contact_info_result);die;
-        return response()->json( $Contact_info_result );
-        
-    }
-
+    
     /*contact info */
     public function add_contact_info(Request $request){
 

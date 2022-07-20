@@ -1603,18 +1603,18 @@ function followup_information(){
             if (data !="") {
                     html ='';
                 for (let index = 0; index < data.length; index++) {
-           var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
-            // console.log(data[index].Department)
+                var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+                    // console.log(data[index].Department)
                     html +='<ul class="timeline">';
                     html +=    '<li>';
                     html +=     '<div class="direction-r">';
                     html +=        '<div class="flag-wrapper">';
                     html +=           '<h6 class="flag wbg">'+followup+'</h6>';
                     html +=           '<br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department</h6>'+data[index].Department+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation</h6>'+data[index].Designation+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager</h6>'+data[index].sup_name+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name</h6>'+data[index].reviewer_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department - </h6>'+data[index].Department+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation - </h6>'+data[index].Designation+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager - </h6>'+data[index].sup_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name - </h6>'+data[index].reviewer_name+'</h6><br>';
                     html +=        '</div>';
                     html +=     '</div>';
                     html +=  '</li>';

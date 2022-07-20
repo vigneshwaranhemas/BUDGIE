@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../assets/css/croppie.css"/>
 <script src="../assets/js/cropper.js"></script>
  <link href="../assets/css/select2.css" rel="stylesheet">
+ <link href="../assets/css/followup.css" rel="stylesheet">
  <link rel='stylesheet' href='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'>
 
 @endsection
@@ -176,7 +177,7 @@ max-width: 1000px !important;
                      <a class="nav-link" id="v-pills-Experience-tab" data-toggle="pill" href="#v-pills-Experience" role="tab" aria-controls="v-pills-Experience" aria-selected="false">Experience</a>
                      <a class="nav-link" id="v-pills-Documents-tab" data-toggle="pill" href="#v-pills-Documents" role="tab" aria-controls="v-pills-Documents" aria-selected="false">Other Documents</a>
                      <a class="nav-link" id="v-pills-Family-tab" data-toggle="pill" href="#v-pills-Family" role="tab" aria-controls="v-pills-Family" aria-selected="false">Family</a>
-
+                     <a class="nav-link" id="v-pills-followup-tab" data-toggle="pill" href="#v-pills-followup" role="tab" aria-controls="v-pills-followup" aria-selected="false">Follow Up</a>
                   </div>
                   <br>
                </div>
@@ -1231,6 +1232,17 @@ max-width: 1000px !important;
                         </div>
                     </div>
                </div>
+                  <!-- Followup -->
+                  <div class="tab-pane fade" id="v-pills-followup" role="tabpanel" aria-labelledby="v-pills-followup-tab">
+                     <nav class="navbar navbar-light bg-primary rounded">
+                       <span class="navbar-brand mb-0 h1" style="color:white;">Followup</span>
+                     </nav>
+                     <br>
+                     <!-- The Timeline -->
+                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+                     <div id="timeline_data">
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -1353,5 +1365,6 @@ $("#age_can").inputFilter(function(value) {
    var get_work_location_link = "{{url('get_work_location')}}";
    var get_grade_link = "{{url('get_grade')}}";
    var hr_working_information_link = "{{url('hr_working_information')}}";
+   var hr_followup_information_link = "{{url('hr_followup_information')}}";
  </script>
 @endsection

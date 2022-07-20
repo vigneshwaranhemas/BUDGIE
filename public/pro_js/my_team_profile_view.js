@@ -23,6 +23,9 @@ function profile_info_process(id){
         data:{emp_id:emp_id},
         dataType: "json",
         success: function(data) {
+            if (data['image']== null) {
+                $("#profile_img").attr('src',"../ID_card_photo/dummy.png");
+            }
            
           if (data['profile'] != ""){
               var dob = moment(data['profile'].dob).format('DD-MM-YYYY');
@@ -113,6 +116,16 @@ function profile_info_process(id){
              $('#HR_Recruiter').html(data['profile'].HR_Recruiter);
              
           }
+          if(data['image'].path != ""){
+            $("#profile_img").attr('src',"../uploads/"+data['image'].path);
+          }else {
+                $("#profile_img").attr('src',"../ID_card_photo/dummy.png");
+            }
+        if(data['banner_img'].banner_image != ""){
+            $("#banner_img").attr('src',"../banner/"+data['banner_img'].banner_image);
+          }else {
+                $("#banner_img").attr('src',"../assets/images/other-images/profile-style-img3.png");
+            }
           
         }
     });
@@ -470,10 +483,10 @@ function followup_information(){
                     html +=        '<div class="flag-wrapper">';
                     html +=           '<h6 class="flag wbg">'+followup+'</h6>';
                     html +=           '<br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department</h6>'+data[index].Department+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation</h6>'+data[index].Designation+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager</h6>'+data[index].sup_name+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name</h6>'+data[index].reviewer_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department - </h6>'+data[index].Department+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation - </h6>'+data[index].Designation+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager - </h6>'+data[index].sup_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name - </h6>'+data[index].reviewer_name+'</h6><br>';
                     html +=        '</div>';
                     html +=     '</div>';
                     html +=  '</li>';

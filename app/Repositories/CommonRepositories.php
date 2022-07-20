@@ -41,10 +41,18 @@ class CommonRepositories implements ICommonRepositories
     }
     public function get_myteam_info_view( $input_details ){
       
-          
+            $bandtbl['image'] = DB::table('images as img')
+                        ->select('*')
+                        ->where('emp_id', '=', $input_details['empID'])
+                        ->first();
             $bandtbl['profile'] = DB::table('customusers')
                         ->select('*')
                         ->where('empID', '=', $input_details['empID'])
+                        ->first();
+
+            $bandtbl['banner_img'] = DB::table('candidate_banner_image')
+                        ->select('*')
+                        ->where('emp_id', '=', $input_details['empID'])
                         ->first();
            // dd(DB::getQueryLog());
             return $bandtbl;
