@@ -133,20 +133,22 @@
                         <span class="text-danger color-hider" id="personal_email_error"  style="display:none;color: red;"></span>
                      </div>
                      <div class="col-md-4 mb-3">
-                        <label for="emrg_con_num">Role of Intake</label>
+                        <label for="emrg_con_num">Role Category Master</label>
                                  <select name="roleofintake"  id="role_of_intake" placeholder="Role of Intake" class="form-control" required="" >
-                                        <option value="">Select Roll of Intake</option>
-                                        <option value="HEPL" data-select2-id="69">HEPL</option>
-                                        <option value="Offsite" data-select2-id="70">Offsite</option>
-                                        <option value="DTP-Kalanjiyam" data-select2-id="71">DTP-Kalanjiyam</option>
-                                        <option value="DTP-Whitescape" data-select2-id="72">DTP-Whitescape</option>
-                                        <option value="DTP-ThinknGrow" data-select2-id="73">DTP-ThinknGrow</option>
-                                        <option value="DTP-DreamMinds" data-select2-id="74">DTP-DreamMinds</option>
-                                        <option value="HEPL - NAPS - Onsite" data-select2-id="75">HEPL - NAPS - Onsite</option>
-                                        <option value="HEPL - NAPS - WFH" data-select2-id="76">HEPL - NAPS - WFH</option>
-                                        <option value="HEPL - CKPL - Onrole" data-select2-id="77">HEPL - CKPL - Onrole</option>
-                                        <option value="HEPL - WFH - Onrole" data-select2-id="78">HEPL - WFH - Onrole</option>
-                                        <option value="HEPL- NAPS- Offsite" data-select2-id="79">HEPL- NAPS- Offsite</option>
+                                        <option value="">Select Role of Intake</option>
+                                        <option value="HEPL">HEPL</option>
+                                        <option value="HEPL">HEPL-Cuddalore</option>
+                                        <option value="HEPL">HEPL-Chennai</option>
+                                        <option value="Offsite">Offsite</option>
+                                        <option value="DTP-Kalanjiyam">DTP-Kalanjiyam</option>
+                                        <option value="DTP-Whitescape">DTP-Whitescape</option>
+                                        <option value="DTP-ThinknGrow">DTP-ThinknGrow</option>
+                                        <option value="DTP-DreamMinds">DTP-DreamMinds</option>
+                                        <option value="HEPL - NAPS - Onsite">HEPL - NAPS - Onsite</option>
+                                        <option value="HEPL - NAPS - WFH">HEPL - NAPS - WFH</option>
+                                        <option value="HEPL - CKPL - Onrole">HEPL - CKPL - Onrole</option>
+                                        <option value="HEPL - WFH - Onrole">HEPL - WFH - Onrole</option>
+                                        <option value="HEPL- NAPS- Offsite">HEPL- NAPS- Offsite</option>
                                 </select>
                         <span class="text-danger color-hider" id="roleofintake_error"  style="display:none;color: red;"></span>
                      </div>
@@ -196,7 +198,7 @@
                         <span class="text-danger color-hider" id="candidate_experience_error"  style="display:none;color: red;"></span>
                      </div>
                      <div class="col-md-4 mb-3">
-                        <label for="rel_emp">Grade</label>
+                        <label for="rel_emp">Band</label>
                         <select id="grade" name="grade"  placeholder="Grade" class="form-control" required="">
                                     <option value="">Select Grade</option>
                                     <option value="2A" data-select2-id="93">2A</option>
@@ -270,7 +272,7 @@
                   <div class="col-md-4 mb-3">
                         <label for="emp_code">Primary Reporting Manager(Default)</label>
                         <select name="supervisor_name" id="supervisor_name" class="form-control" placeholder="Supervisor Name">
-                        <option value="">Select Primary Remporting Manager</option>
+                        <option value="">Select Primary Reporting Manager</option>
                          @foreach($user_info['employee'] as $employee)
                          <option value="{{$employee->empID}}">{{$employee->username}}</option>
                          @endforeach
@@ -300,7 +302,7 @@
                   </div>
                   <div class="form-row">
                   <div class="col-md-4 mb-3">
-                        <label for="p_email">CTC Proposed</label>
+                        <label for="p_email">CTC</label>
                         <input class="form-control" id="ctc_proposed" onkeypress="return isNumber(event)" name="ctc_proposed" type="text" placeholder="CTC Proposed">
                         <span class="text-danger color-hider" id="ctc_proposed_error"  style="display:none;color: red;"></span>
                      </div>
@@ -315,6 +317,7 @@
                                <option value="">Select Gender</option>
                                <option value="Male">Male</option>
                                <option value="Female">Female</option>
+                               <option value="Others">Others</option>
                             </select>
                      </div>              
                   </div>

@@ -27,6 +27,9 @@
 @endsection
 
 @section('content')
+<div class="loader-box" id="pre_loader" style="display: none;">
+    <div class="loader-29" style="z-index: 100;position: fixed;"></div>
+ </div>
 <div class="col-sm-12 col-xl-12 xl-100">
     <div class="card">
 
@@ -53,7 +56,7 @@
                              </div>
 
                              <div class="col-md-6 text-right">
-                             <button type="button" class="btn btn-primary" id="EmailStatusUpdateBtn">Save changes</button>
+                             <button type="button" class="btn btn-primary" id="EmailStatusUpdateBtn" style="display:none;">Save changes</button>
                              </div>
                             </div>
                         </div>
@@ -80,7 +83,7 @@
          
                                               <tr>
                                                  <td>{{$i}}</td>
-                                                 <td><input type='checkbox'></td>
+                                                 <td><input type='checkbox' class="check_ckechbox"></td>
                                                  <td>{{$info->empID}}</td>
                                                  <td>{{$info->username}}</td>
                                                  <td>{{$info->email}}</td>
@@ -132,7 +135,7 @@
                                                  <td>{{$info->email}}</td>
                                                  <td>{{$info->contact_no}}</td>
                                                  <td>{{$info->hr_suggested_mail}}</td>
-                                                 <td>{{$info->asset_type}}</td>
+                                                 <td>{{implode(",",json_decode($info->asset_type))}}</td>
                                               </tr>
                                           <?php $i++; ?>
                                          @endforeach

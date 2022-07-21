@@ -139,9 +139,9 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
    }
    public function EmailIdCreation($data)
     {
+        // :where("customusers.doj",$data['doj'])
         $email_table="";
-        $result=CustomUser::where("customusers.doj",$data['doj'])
-        ->where("customusers.pre_onboarding",1)
+        $result=CustomUser::where("customusers.pre_onboarding",1)
         ->where("customusers.HR_on_boarder",$data["HR_on_boarder"])
         ->select("customusers.cdID","customusers.empID","customusers.username",
                  "customusers.email","customusers.contact_no")->get();
@@ -168,7 +168,7 @@ class HrPreonboardingrepositories implements IHrPreonboardingrepositories {
                                    <td>".$email_info['email']."</td>
                                    <td class='text-center'>".$status."</td>
                                    <td>".$email_check["hr_suggested_mail"]."</td>
-                                   <td>".$email_check["asset_type"]."</td>
+                                   <td>".implode(",",json_decode($email_check['asset_type']))."</td>
                            </tr>";
 
                   }

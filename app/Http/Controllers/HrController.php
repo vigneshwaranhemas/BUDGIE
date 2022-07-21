@@ -656,7 +656,7 @@ public function AddEmployee()
               ]);
               if($validator->passes()){
                 $table_max_id=CustomUser::max('id');
-                $emp_id="CAND".($table_max_id+1)."";
+                $emp_id="TEMP".($table_max_id+1)."";
                   $emp_data=array('department'=>$request->Department,'designation'=>$request->Designation,
                                   'username'=>$request->firstname,'contact_no'=>$request->mobile,
                                   'p_email'=>$request->personal_email,'grade'=>$request->grade,
@@ -669,12 +669,13 @@ public function AddEmployee()
                                   'empID'=>$emp_id,'Buddy'=>$request->Buddy,'emp_num_2'=>$request->sec_mobile,
                                   'role_type'=>$request->role,'role_id'=>$request->candidate_role_type,
                                   'active'=>1,'pre_onboarding'=>1,'m_name'=>$request->middlename,'l_name'=>$request->lastname,
-                                  'additional_supervisor'=>json_encode($request->additional_manager));
+                                  'additional_supervisor'=>json_encode($request->additional_manager),
+                                 'ctc_per_annual'=>$request->ctc_proposed);
                   //  $can_cont_info=array('p_State'=>$request->state,'p_addres'=>$request->candidate_permanent_address,
                   //                       'emp_id'=>$emp_id,'c_addres'=>$request->candidate_current_address);  
                    $can_other_info=array('Business'=>$request->Business,'Vertical'=>$request->Vertical,
                                          'attendance_format'=>$request->attendance_format,'week_off'=>$request->week_off,
-                                         'ctc_proposed'=>$request->ctc_proposed,'marital_status'=>$request->marital_status,
+                                         'marital_status'=>$request->marital_status,
                                          'empID'=>$emp_id,'experience'=>$request->candidate_experience);    
                    $can_result_others=Candidate_Other_infoModel::insert($can_other_info);                     
                    $result=CustomUser::insert($emp_data);

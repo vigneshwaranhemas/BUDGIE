@@ -1,5 +1,28 @@
 
 $(()=>{
+
+
+//button change event
+$(()=>{
+    $('#export-button').on('change', 'tbody input.check_ckechbox', function () {
+        var checkbox_count=[];
+        $('#export-button tbody>tr').each(function () { 
+                   var col1=$(this).find("td:eq(1) input[type=checkbox]");
+                   if(col1.prop('checked')){
+                       checkbox_count.push(col1.val());
+                   }
+        });    
+        if(checkbox_count.length >0){
+          $("#EmailStatusUpdateBtn").show();      
+        }
+        else{
+          $("#EmailStatusUpdateBtn").hide();   
+        }
+    });
+})
+
+
+
     $('#EmailStatusUpdateBtn').on('click',(e)=>{
         $("#EmailStatusUpdateBtn").prop('disabled',true);
         var token=$("#token").val();
@@ -20,16 +43,16 @@ $(()=>{
         });
         if(checkcount>0)
         {
-            alert("one")
-            // console.log(selected)
             $.ajax({
                 url:it_url,
                 type:"POST",
                 data:{empID:selected,_token:token},
                 beforeSend:(e)=>{
-                   console.log("Loading!.....");
+                //    console.log("Loading!.....");
+                   $("#pre_loader").show();
                 },
                 success:(response)=>{
+                    $("#pre_loader").hide();
                     var res=JSON.parse(response);
                     if(res.success==1){
                         Toastify({
