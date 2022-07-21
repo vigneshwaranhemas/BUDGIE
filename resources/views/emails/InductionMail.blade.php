@@ -16,7 +16,7 @@
 
 <p>On behalf of all the members and the management, we would like to <br> extend our warmest welcome and good wishes!</p>
 
-<p>Please login to http://hub1.cavinkare.in/BUDGIE/public/index.php to <br> access BUDGIE portal and login using credentials mentioned below. </p>
+<p>Please login to <a href="http://hub1.cavinkare.in/BUDGIE/public/index.php"></a> to <br> access BUDGIE portal and login using credentials mentioned below. </p>
 
 <p>Candidate Id -  "{{$username}}" Password -  "{{$password}}"</p>
 

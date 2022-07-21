@@ -98,7 +98,7 @@
                                         <th>#</th>
                                         <th>Employee ID</th>
                                         <th>Name</th>
-                                        <th>EMmail</th>
+                                        <th>Email</th>
                                         <th>Mobile Number</th>
                                         <th>Seating Status</th>
                                         <th>Idcard Status</th>

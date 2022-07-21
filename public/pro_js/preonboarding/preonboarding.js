@@ -41,7 +41,7 @@ $(()=>{
                    success:function(data)
                    {
                       $(".spinner-grow").remove();
-                      $("#SaveBtn").html("Submit");
+                    //   $("#SaveBtn").html("Save Changes");
                       $('#SaveBtn').prop('disabled',false);
                       var res=JSON.parse(data);
                       if(res.type==1){

@@ -2787,10 +2787,10 @@ class AdminController extends Controller
         $id=$request->id;
         $status=$request->status;
         if($status==1){
-             $update_data=array('Seating_Request'=>1);
+             $update_data=array('Seating_Request'=>$request->seat_value);
         }
         else{
-             $update_data=array('IdCard_status'=>1);
+             $update_data=array('IdCard_status'=>$request->seat_value);
         }
         $response=$this->admrpy->update_seating_status($id,$update_data);
         if($response){

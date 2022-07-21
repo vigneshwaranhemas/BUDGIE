@@ -197,10 +197,11 @@ $(()=>{
             type:"POST",
             data:{emp_id:emp_code},
             beforeSend:(data)=>{
-                console.log(data)
+                $("#GenIdBtn").attr('disabled',true);
+                $("#pre_loader").show();
             },
             success:(response)=>{
-                // console.log(response)
+                $("#pre_loader").hide();
                 var res=JSON.parse(response)
                 if(res.success==1)
                 {

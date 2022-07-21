@@ -26,9 +26,11 @@
 @endsection
 
 @section('content')
+<div class="loader-box" id="pre_loader" style="display: none;">
+    <div class="loader-29" style="z-index: 100;position: fixed;"></div>
+ </div>
 <div class="col-sm-12 col-xl-12 xl-100">
     <div class="card">
-
        <div class="card-body">
           <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
              <li class="nav-item">
@@ -52,7 +54,7 @@
                              </div>
 
                              <div class="col-md-6 text-right">
-                             <button type="button" class="btn btn-primary" id="StatusUpdateBtn">Save changes</button>
+                             <button type="button" class="btn btn-primary" style="display:none;" id="StatusUpdateBtn">Save changes</button>
                              </div>
                             </div>
                         </div>
@@ -76,7 +78,13 @@
                                  <?php $i=1;?>
                                  @foreach ($seating_info['pending'] as $data)
                                      <td>{{$i}}</td>
-                                     <td><input type="checkbox"><input type="hidden" value="{{$data['empId']}}"></td>
+                                     <td>
+                                        @if($data['Seating_Request']==1 && $data['IdCard_status']==1)
+                                          <input type="checkbox" class="check_ckechbox"><input type="hidden" value="{{$data['empId']}}">
+                                         @else
+                                           -  
+                                        @endif
+                                    </td>
                                      <td>{{$data['empId']}}</td>
                                      <td>{{$data['username']}}</td>
                                      <td>{{$data['email']}}</td>
@@ -84,14 +92,14 @@
                                      <td>
                                         <div class="media-body text-center icon-state">
                                             <label class="switch">
-                                            <input type="checkbox" {{$data['Seating_Request'] == 0 ? '' : 'checked'}}  onchange=model_trigger("{{$data['empId']}}",1)><span class="switch-state bg-info"></span>
+                                            <input type="checkbox" {{$data['Seating_Request'] == 0 ? '' : 'checked'}}  onchange=model_trigger("{{$data['empId']}}",1,this)><span class="switch-state bg-info"></span>
                                             </label>
                                          </div>
                                         </td>
                                         <td>
                                             <div class="media-body text-center icon-state">
                                                 <label class="switch">
-                                                <input type="checkbox" {{$data['IdCard_status'] == 0 ? '' : 'checked'}}  onchange=model_trigger1("{{$data['empId']}}",2)><span class="switch-state bg-info"></span>
+                                                <input type="checkbox" {{$data['IdCard_status'] == 0 ? '' : 'checked'}}  onchange=model_trigger1("{{$data['empId']}}",2,this)><span class="switch-state bg-info"></span>
                                                 </label>
                                              </div>
                                             </td>
@@ -137,7 +145,7 @@
                                      <td>
                                         <div class="media-body text-center icon-state">
                                             <label class="switch">
-                                            <input type="checkbox" {{$data['Seating_Request'] == 0 ? '' : 'checked'}} disabled  onchange=model_trigger("{{$data['empId']}}",1)><span class="switch-state bg-info"></span>
+                                            <input type="checkbox" {{$data['Seating_Request'] == 0 ? '' : 'checked'}}    disabled  onchange=model_trigger("{{$data['empId']}}",1)><span class="switch-state bg-info"></span>
                                             </label>
                                          </div>
                                         </td>
@@ -173,12 +181,14 @@
              <h5 class="modal-title" id="exampleModalLabel">Seating Request</h5>
              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
           </div>
-          <div class="modal-body">Are you sure to confirm  that seating was alloted to this employee!...</div>
+          <!-- Are you sure to confirm  that seating was alloted to this employee!... -->
+          <div class="modal-body">Are you sure to change the seating status !.. </div>
           <div class="modal-footer">
              <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
              <button class="btn btn-secondary" type="button" data-dismiss="modal" id="SeatingRequestBtn">Save changes</button>
              <input type="hidden" id="hidden_seat">
              <input type="hidden" id="hidden_status">
+             <input type="hidden" id="seat_status">
           </div>
        </div>
     </div>
@@ -190,12 +200,15 @@
              <h5 class="modal-title" id="exampleModalLabel">Seating Request</h5>
              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
           </div>
-          <div class="modal-body">Are you sure to confirm  that IdCard was Created to this employee!...</div>
+          <!-- Are you sure to confirm  that IdCard was Created to this employee!... -->
+          <div class="modal-body">Are you sure to Change the IdCard Status</div>
           <div class="modal-footer">
              <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
              <button class="btn btn-secondary" type="button" data-dismiss="modal" id="SeatingRequestBtn1">Save changes</button>
              <input type="hidden" id="hidden_seat1">
              <input type="hidden" id="hidden_status1">
+             <input type="hidden" id="seat_status1">
+
           </div>
        </div>
     </div>
@@ -203,14 +216,11 @@
  @endsection
 
 @section('script')
-
-
-
-@endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../pro_js/admin/Seating_Request.js">
-</script>
 <script>
 var Seating_url="Admin_Seating_Request";
 var Status_update="Admin_Request_update";
 </script>
+<script src="../pro_js/admin/Seating_Request.js"></script>
+
+@endsection
+

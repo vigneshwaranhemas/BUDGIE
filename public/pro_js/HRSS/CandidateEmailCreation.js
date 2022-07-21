@@ -47,6 +47,7 @@ $(()=>{
                   var col3=currrow.find('td:eq(6) input[type=text]').val();
                   var col4=currrow.find('td:eq(7) option:selected').each(function(){
                     assets.push($(this).val())
+                    console.log($(this).val())
                   });
                    selected.push({
                      empID:col1,
@@ -54,6 +55,7 @@ $(()=>{
                      hr_suggested_mail:col3,
                      asset_type:assets,
                    });
+                   assets=[];
                    check_count++;
             }
         });

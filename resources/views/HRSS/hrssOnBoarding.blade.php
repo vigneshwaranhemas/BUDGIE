@@ -123,8 +123,13 @@
                                                                     <a class="btn btn-primary action-button" onclick=model_trigger("{{$info["empID"]}}") href="javascript:void(0)"><i class="fa fa-pencil" style="margin-left: -17px;"></i></a>
                                                                     @endif  
                                                                   @endif
-                                                                 <a class="btn btn-success action-button" onclick=edit_modal("{{$info["empID"]}}") href="javascript:void(0)"><i class="icon-save" style="margin-left: -17px;"></i><a>
-                                                                 <a class="btn btn-secondary action-button" href="view_welcome_aboard_hr?id={{$info["empID"]}}"><i class="fa fa-eye" aria-hidden="true" style="margin-left: -17px;"></i><a>
+
+                                                                  @if($info['Id_status']!=0)
+                                                                     <a class="btn btn-success action-button" onclick=edit_modal("{{$info["empID"]}}") href="javascript:void(0)"><i class="icon-save" style="margin-left: -17px;"></i><a>
+                                                                  @else
+                                                                    - 
+                                                                  @endif
+                                                                 <!-- <a class="btn btn-secondary action-button" href="view_welcome_aboard_hr?id={{$info["empID"]}}"><i class="fa fa-eye" aria-hidden="true" style="margin-left: -17px;"></i><a> -->
                                                                </td>
                                                                <td>
                                                                 <a class="btn btn-warning action-button" href="userdocuments?id={{Crypt::encrypt($info["empID"])}}"><i class="icon-save" style="margin-left: -17px;"></i><a>
