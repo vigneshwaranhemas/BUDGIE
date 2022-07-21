@@ -335,16 +335,34 @@ class CommonRepositories implements ICommonRepositories
     }
     
 
-    public function my_team_tl_info($id){
+    public function my_team_tl_info($input_details){
         // DB::enableQueryLog();
-        $supervisor['supervisor']=CustomUser::select('customusers.empID','username','img_path','sup_emp_code','designation','skill','path','banner_image')
+        $mdlrecreqtbl = DB::table('customusers as cs');
+        $mdlrecreqtbl = $mdlrecreqtbl->select('cs.empID','username','img_path','sup_emp_code','designation','skill','path','banner_image');
+        $mdlrecreqtbl = $mdlrecreqtbl->leftjoin('images as im', 'cs.empID', '=', 'im.emp_id');
+        $mdlrecreqtbl = $mdlrecreqtbl->leftjoin('candidate_banner_image as cbi', 'cs.empID', '=', 'cbi.emp_id');
+
+            if ($input_details['team_member_name']!="") {    
+            $mdlrecreqtbl =  $mdlrecreqtbl->where('cs.empID',$input_details['team_member_name']);
+            }
+
+                    $mdlrecreqtbl->where(function($query) use ($input_details){
+                           $query->where('sup_emp_code',$input_details['id'])
+                                ->orwhere('reviewer_emp_code',$input_details['id']);
+                        });
+        $mdlrecreqtbl =  $mdlrecreqtbl->get();
+
+        // echo "<pre>";print_r($mdlrecreqtbl);die;
+        // dd(DB::getQueryLog()); 
+
+
+       /* $supervisor['supervisor']=CustomUser::select('customusers.empID','username','img_path','sup_emp_code','designation','skill','path','banner_image')
                                 ->leftjoin('images', 'customusers.empID', '=', 'images.emp_id')
                                 ->leftjoin('candidate_banner_image', 'customusers.empID', '=', 'candidate_banner_image.emp_id')
                                 ->where('sup_emp_code',$id)
                                 ->orwhere('reviewer_emp_code',$id)
-                                ->get();
-        // dd(DB::getQueryLog());        
-        return $supervisor;
+                                ->get();*/
+        return $mdlrecreqtbl;
 
     }
      public function my_team_experience($id){
@@ -381,5 +399,15 @@ class CommonRepositories implements ICommonRepositories
         // dd(DB::getQueryLog());
         $update_roletbl = 1;
         return $update_roletbl;
+    }
+    public function my_teams_list_result_name($id){
+        // DB::enableQueryLog();
+        $my_teams_members=CustomUser::select('username','m_name','l_name','empID')
+                                ->where('sup_emp_code',$id)
+                                ->orwhere('reviewer_emp_code',$id)
+                                ->get();
+        // dd(DB::getQueryLog());        
+        return $my_teams_members;
+
     }
 }

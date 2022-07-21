@@ -1601,11 +1601,12 @@ function followup_information(){
         dataType: "json",
         success: function(data) {
             if (data !="") {
-                    html ='';
-                    var verify_num=1;
-                    var verify_class="";
+                html ='';
+                var verify_num=1;
+                var verify_class="";
                 for (let index = 0; index < data.length; index++) {
                 var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+                
                      if(verify_num==1){
                         verify_num=2;
                         verify_class="direction-r";

@@ -498,7 +498,7 @@ Route::post('getemail_process','LoginController@getemail_process');
 Route::get('chat_process','CommonController@chat_process');
 /*my_team*/
 Route::get('my_team','CommonController@my_team');
-Route::get('my_team_tl_info','CommonController@my_team_tl_info');
+Route::post('my_team_tl_info','CommonController@my_team_tl_info');
 
 // Company Policy Candidate
 Route::get('company_policy_candidate', 'CandidateController@company_policy_candidate')->name('company_policy_candidate');
@@ -688,6 +688,7 @@ Route::post('my_team_education_info_view', 'CommonController@my_team_education_i
 Route::post('my_team_family_information', 'CommonController@my_team_family_information');
 Route::post('my_team_followup_information','CommonController@my_team_followup_information');
 Route::post('hr_followup_information','CommonController@hr_followup_information');
+Route::post('my_team_members_list_link','CommonController@my_team_members_list_link');
 
 
 

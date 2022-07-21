@@ -403,7 +403,7 @@ max-width: 1000px !important;
                                                            </select>
                                                          <span class="text-danger color-hider" id="religion_can_error" style="display:none;color: red;"></span>
                                                       </div>
-                                                       <div class="col-sm-4 mb-3">
+                                                      <div class="col-sm-4 mb-3">
                                                         <label for="Habits">Habits</label>
                                                           <select class="form-control" name="habits_status" id="habits_status">
                                                              <option value="">-Select Habits-</option>
@@ -1606,7 +1606,6 @@ max-width: 1000px !important;
     });
 
 /*0 to 150 age validation*/
-// Restricts input for each element in the set of matched elements to the given inputFilter.
 (function($) {
   $.fn.inputFilter = function(callback, errMsg) {
     return this.on("input keydown keyup mousedown mouseup select contextmenu drop focusout", function(e) {
@@ -1620,7 +1619,6 @@ max-width: 1000px !important;
         this.oldSelectionStart = this.selectionStart;
         this.oldSelectionEnd = this.selectionEnd;
       } else if (this.hasOwnProperty("oldValue")) {
-        // Rejected value - restore the previous one
         $(this).addClass("input-error");
         this.setCustomValidity(errMsg);
         this.reportValidity();

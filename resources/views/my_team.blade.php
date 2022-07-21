@@ -12,6 +12,9 @@
    /*span.small {
   font-variant: small-caps;
 }*/
+.pointer{
+        cursor: pointer;
+    }
 </style>
 @endsection
 
@@ -32,11 +35,18 @@
    <div class="card-footer row" id="exp_information">
    </div>
 </div> -->
-<div class="container-fluid">
-   <div class="row" id="my_teams">
-      
+   <div class="col-sm-4 mb-3">
+       <select class="form-control js-example-basic-single" name="team_members_list" id="team_members_list">
+          <option value="">-Select Team Member-</option>
+      </select>
    </div>
-</div>
+   <div class="container-fluid">
+      <div class="row" id="my_teams">
+         
+      </div>
+      <!-- <div class="card-footer row" id="exp_information">
+      </div> -->
+   </div>
 @endsection
 
 @section('script')
@@ -50,6 +60,7 @@
 
     var my_team_tl_link = "{{url('my_team_tl_info')}}";
     var my_team_experience_info_link = "{{url('my_team_experience_info')}}";
+    var my_team_members_list_link_page = "{{url('my_team_members_list_link')}}";
 </script>
 
 @endsection

@@ -898,42 +898,41 @@ foreach($result['employees'] as $emp)
 
 
 public function my_team_tl_info(Request $request){
+
         $session_val = Session::get('session_info');
-        $id= $session_val['empID'];
-        $result = $this->cmmrpy->my_team_tl_info($id);
+        $input_details['id']= $session_val['empID'];
+
+        $input_details['team_member_name']= $request['team_member_name'];
+        $result = $this->cmmrpy->my_team_tl_info($input_details);
          if(sizeof($result)){
-        $sup = $result['supervisor'];
+        $sup = $result;
         // $exp = $result['exp'];
            foreach($sup  as $supervisors){
-                if ($supervisors['path'] !="") {
-                    $sup_image ='../uploads/'.$supervisors['path'];
+    // echo "<pre>";print_r($supervisors);die;
+                if ($supervisors->path !="") {
+                    $sup_image ='../uploads/'.$supervisors->path;
                 }else{
                     $sup_image='../media/dummy.png';
                 }
-                if ($supervisors['banner_image'] !="") {
-                    $banner_image ='../banner/'.$supervisors['banner_image'];
+                if ($supervisors->banner_image !="") {
+                    $banner_image ='../banner/'.$supervisors->banner_image;
                 }else{
                     $banner_image='../assets/images/user-card/8.jpg';
                 }
-                if ($supervisors['skill'] !="") {
-                    $test=json_decode($supervisors['skill']);
+                if ($supervisors->skill !="") {
+                    $test=json_decode($supervisors->skill);
                     $skill = implode(" , " ,$test);
                 }else{
                     $skill ="---";
                 }
-               /* foreach($exp as $exp_info ){
-                   $exp_start_month= $exp_info['exp_start_month'];
-                   $exp_end_month= $exp_info['exp_end_month'];*/
-
-                $emp_data[]=array('id'=>$supervisors['empID'],
-                                    'pid'=>$supervisors['sup_emp_code'],
-                                    'name'=>$supervisors['username'],
-                                    'txt'=>$supervisors['designation'],
+               
+                $emp_data[]=array('id'=>$supervisors->empID,
+                                    'pid'=>$supervisors->sup_emp_code,
+                                    'name'=>$supervisors->username,
+                                    'txt'=>$supervisors->designation,
                                     'img'=>$sup_image,
                                     'banner_img'=>$banner_image,
                                     'skill'=>$skill,
-                                    // 'exp_start_month'=>$exp_start_month,
-                                    // 'exp_end_month'=>$exp_end_month,
                                     );
             }
                 // echo "<pre>";print_r($emp_data);die;        
@@ -1089,5 +1088,12 @@ public function my_team_experience_info(Request $request){
         $input_details = array( "emp_id" => $request->emp_id, );
         $followup_result = $this->profrpy->hr_followup_information_data($input_details);
         return response()->json( $followup_result );
+    }
+    /*get followup list*/
+    public function my_team_members_list_link(Request $request){
+        $session_val = Session::get('session_info');
+        $id = $session_val['empID'];
+        $my_teams_list_result = $this->cmmrpy->my_teams_list_result_name($id);
+        return response()->json( $my_teams_list_result );
     }
 }
