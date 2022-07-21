@@ -11,7 +11,7 @@ headers: {
 }
 });
 
-
+/*ifsc code validation*/
 $(document).ready(function(){       
     $("#ifsc_code").change(function () {      
     var inputvalues = $(this).val();      
@@ -1602,24 +1602,31 @@ function followup_information(){
         success: function(data) {
             if (data !="") {
                     html ='';
+                    var verify_num=1;
+                    var verify_class="";
                 for (let index = 0; index < data.length; index++) {
-           var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
-            // console.log(data[index].Department)
+                var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+                     if(verify_num==1){
+                        verify_num=2;
+                        verify_class="direction-r";
+                     }else{
+                        verify_num=1;
+                        verify_class="direction-l";
+                     }
                     html +='<ul class="timeline">';
                     html +=    '<li>';
-                    html +=     '<div class="direction-r">';
+                    html +=     '<div class="'+verify_class+'">';
                     html +=        '<div class="flag-wrapper">';
                     html +=           '<h6 class="flag wbg">'+followup+'</h6>';
                     html +=           '<br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department</h6>'+data[index].Department+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation</h6>'+data[index].Designation+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager</h6>'+data[index].sup_name+'</h6><br>';
-                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name</h6>'+data[index].reviewer_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department - </h6>'+data[index].Department+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation - </h6>'+data[index].Designation+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager - </h6>'+data[index].sup_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name - </h6>'+data[index].reviewer_name+'</h6><br>';
                     html +=        '</div>';
                     html +=     '</div>';
                     html +=  '</li>';
                     html += '</ul>';
-
                 };
                 $('#timeline_data').html(html);
                 }

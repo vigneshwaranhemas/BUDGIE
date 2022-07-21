@@ -68,7 +68,6 @@ function get_worklocation() {
         data:{},
         dataType: "json",
         success: function(data) {
-             console.log(data[2].worklocation)
             var html = '<option value="">Select Work Location</option>';
             for (let index = 0; index < data.length; index++) {
                 html += "<option value='" + data[index].worklocation+ "'>" + data[index].worklocation+ "</option>";
@@ -1032,15 +1031,15 @@ function documents_info(){
     var params = new window.URLSearchParams(window.location.search);
     var id=params.get('id')
     var empID=params.get('empID')
+    
     $.ajax({
         url: documents_info_link,
         method: "POST",
         data:{"id":id,"empID":empID},
         dataType: "json",
         success: function(data) {
-            // console.log(data)
+            // console.log(data[0].passport_photo)
                 if (data !="") {
-
                     // $("#document_button").hide();
 
                     if (data[0].passport_photo !="") {
@@ -1172,6 +1171,57 @@ function family_information(id,empID){
 
                 });
                 $('#family_td').html(html);
+                }
+            }
+        });
+    }
+
+    /*followup*/
+$("#v-pills-followup-tab").on('click', function() {
+    followup_information();
+});
+
+function followup_information(){
+    // alert("as")
+    var params = new window.URLSearchParams(window.location.search);
+    var id=params.get('id')
+    var emp_id=params.get('empID')
+    // alert(emp_id)
+    $.ajax({
+        url: hr_followup_information_link,
+        method: "POST",
+        data:{"id":id,"emp_id":emp_id},
+        dataType: "json",
+        success: function(data) {
+            if (data !="") {
+                    html ='';
+                    var verify_num=1;
+                    var verify_class="";
+                for (let index = 0; index < data.length; index++) {
+                var followup = moment(data[index].created_on).format('MM-DD-YYYY'); 
+                     if(verify_num==1){
+                        verify_num=2;
+                        verify_class="direction-r";
+                     }else{
+                        verify_num=1;
+                        verify_class="direction-l";
+                     }
+                    html +='<ul class="timeline">';
+                    html +=    '<li>';
+                    html +=     '<div class="'+verify_class+'">';
+                    html +=        '<div class="flag-wrapper">';
+                    html +=           '<h6 class="flag wbg">'+followup+'</h6>';
+                    html +=           '<br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Department - </h6>'+data[index].Department+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Designation - </h6>'+data[index].Designation+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reporting Manager - </h6>'+data[index].sup_name+'</h6><br>';
+                    html +=           '<h6 class="time-wrapper"><h6 class="time">Reviewer Name - </h6>'+data[index].reviewer_name+'</h6><br>';
+                    html +=        '</div>';
+                    html +=     '</div>';
+                    html +=  '</li>';
+                    html += '</ul>';
+                };
+                $('#timeline_data').html(html);
                 }
             }
         });

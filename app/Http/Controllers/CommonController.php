@@ -903,58 +903,59 @@ public function my_team_tl_info(Request $request){
         $result = $this->cmmrpy->my_team_tl_info($id);
          if(sizeof($result)){
         $sup = $result['supervisor'];
-        $exp_info = $result['exp'];
+        // $exp = $result['exp'];
            foreach($sup  as $supervisors){
-            if ($supervisors['path'] !="") {
-                            $sup_image='../uploads/'.$supervisors['path'];
-            }else{
-                $sup_image='../media/dummy.png';
-            }
-            if ($supervisors['banner_image'] !="") {
-                            $banner_image='../banner/'.$supervisors['banner_image'];
-            }else{
-                $banner_image='../assets/images/user-card/8.jpg';
-            }
-            if ($supervisors['skill'] !="") {
-
-                $test=json_decode($supervisors['skill']);
-                $skill = implode(" , " ,$test);
-
-            }else{
-                $skill ="---";
-            }
-
-            $exp_info = [];
-            $j=0;
-            for ($i=0; $i<=30; $i++) {
-                array_push($exp_info, $i);
-                $j++;
-            }
-            $Total = array_sum($exp_info);
-
-               /* foreach ($exp_info as $value) {
-                    $sum=0;
-                    // echo "<pre>";print_r($value['days']);die;/
-                    $sum+=$value;       
-                }*/
-
-                // $sum+= $exp_info['days'];
+                if ($supervisors['path'] !="") {
+                    $sup_image ='../uploads/'.$supervisors['path'];
+                }else{
+                    $sup_image='../media/dummy.png';
+                }
+                if ($supervisors['banner_image'] !="") {
+                    $banner_image ='../banner/'.$supervisors['banner_image'];
+                }else{
+                    $banner_image='../assets/images/user-card/8.jpg';
+                }
+                if ($supervisors['skill'] !="") {
+                    $test=json_decode($supervisors['skill']);
+                    $skill = implode(" , " ,$test);
+                }else{
+                    $skill ="---";
+                }
+               /* foreach($exp as $exp_info ){
+                   $exp_start_month= $exp_info['exp_start_month'];
+                   $exp_end_month= $exp_info['exp_end_month'];*/
 
                 $emp_data[]=array('id'=>$supervisors['empID'],
-                'pid'=>$supervisors['sup_emp_code'],
-                'name'=>$supervisors['username'],
-                'txt'=>$supervisors['designation'],
-                'img'=>$sup_image,
-                'banner_img'=>$banner_image,
-                'skill'=>$skill,
-                'exp'=>$Total,
-                );
+                                    'pid'=>$supervisors['sup_emp_code'],
+                                    'name'=>$supervisors['username'],
+                                    'txt'=>$supervisors['designation'],
+                                    'img'=>$sup_image,
+                                    'banner_img'=>$banner_image,
+                                    'skill'=>$skill,
+                                    // 'exp_start_month'=>$exp_start_month,
+                                    // 'exp_end_month'=>$exp_end_month,
+                                    );
             }
+                // echo "<pre>";print_r($emp_data);die;        
             $response=array('success'=>1,'message'=>$emp_data);
         }else{
             $response=array('success'=>2,'message'=>"<h3>No Employee Under Your Supervising...</h3>");
 
         }
+    echo json_encode($response);
+    }
+public function my_team_experience_info(Request $request){
+        $session_val = Session::get('session_info');
+        $id= $session_val['empID'];
+        $result = $this->cmmrpy->my_team_experience($id);
+
+        $exp = $result['exp'];
+           foreach($exp  as $experience){
+            $exp_data[]=array('days'=>$experience['days']);
+                }
+        // echo "1<pre>";print_r($exp_data);die;
+            $response=array('success'=>1,'message'=>$exp_data);
+       
     echo json_encode($response);
     }
     public function pms_conformation_sub_naps(Request $request){
@@ -1005,22 +1006,88 @@ public function my_team_tl_info(Request $request){
         echo json_encode($result);
 
     }
-public function remove_display_image()
-   {
+    public function remove_display_image(){
         $session_val = Session::get('session_info');
         $id= $session_val['empID'];
         $result = $this->cmmrpy->delete_pro_img($id);
         // echo "c<pre>";print_r($result);die;
         echo json_encode($result);
     }
-    public function remove_slide_pay_doc()
-   {
+    public function remove_slide_pay_doc(){
         $session_val = Session::get('session_info');
         $id= $session_val['empID'];
         $result = $this->cmmrpy->delete_other_doc_profile($id,'documents','Payslips');
-        // echo "<pre>";print_r($result);die;
         echo json_encode($result);
     }
+    public function my_team_profile_view(){
+             return view('my_team_profile_view');
+        }
 
-    
+    public function my_team_profile(Request $request){
+
+        $input_details = array("empID" => $request->emp_id, );
+        $candidate_info_result= $this->cmmrpy->get_myteam_info_view( $input_details );
+        return response()->json( $candidate_info_result );
+
+    }
+    public function my_team_account_info(Request $request){
+
+        $input_details = array( "empID" => $request->emp_id, );
+        $candidate_info_result_hr = $this->cmmrpy->account_hr_info( $input_details );
+        return response()->json( $candidate_info_result_hr );
+
+    }
+    public function my_team_experience_info_profile(Request $request){
+        $cdID = "";
+        $emp_id = $request['emp_id'];
+        $input_details = array( "cdID" => $cdID,
+                                "emp_id" =>$emp_id );
+        $experience_result = $this->profrpy->experience_info( $input_details );
+        // echo "<pre>";print_r($experience_result);die;
+        
+        return response()->json( $experience_result );
+        
+    }
+    /*education_info_view*/
+     public function my_team_education_info_view(Request $request){
+
+        $cdID = "";
+        $emp_id = $request['emp_id'];
+        $input_details = array( "cdID" => $cdID,
+                                    "emp_id"=> $emp_id );
+        $education_result = $this->profrpy->education_info( $input_details );
+        
+        return response()->json( $education_result );    
+    }
+    /*family info */
+     public function my_team_family_information(Request $request){
+
+        $cdID = "";
+        $emp_id = $request['emp_id'];
+        $input_details = array( "cdID" => $cdID,
+                                "emp_id" =>$emp_id );
+        $education_result = $this->profrpy->family_info( $input_details );
+        return response()->json( $education_result );
+    }
+    public function Contact_info_view_myteam(Request $request){
+        $cdID ="";
+        $input_details = array( "cdID" => $cdID, "emp_id" => $request->emp_id  );
+        $Contact_info_result = $this->profrpy->Contact_info( $input_details );
+        // echo "<pre>";print_r($Contact_info_result);die;
+        return response()->json( $Contact_info_result );
+    }
+
+    /*get followup list*/
+    public function my_team_followup_information(Request $request){
+         $emp_ID = $request['emp_id'];
+        $followup_result = $this->profrpy->followup_information_data($emp_ID);
+        return response()->json( $followup_result );
+    }
+    /*get followup list*/
+    public function hr_followup_information(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $input_details = array( "emp_id" => $request->emp_id, );
+        $followup_result = $this->profrpy->hr_followup_information_data($input_details);
+        return response()->json( $followup_result );
+    }
 }

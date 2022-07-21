@@ -243,14 +243,14 @@ class DocumentsController extends Controller
         $session_val = Session::get('session_info');
         $emp_ID = $session_val['empID'];
         $input_details = array( "emp_ID" => $emp_ID, );
-        $get_documents_result = $this->admrpy->get_table('documents', $input_details );
+        $get_information_result = $this->admrpy->get_table('documents', $input_details );
         // echo "string";print_r($get_documents_result);die;
-        return response()->json( $get_documents_result );  
+        return response()->json( $get_information_result );  
     }
     public function doc_information_hr(Request $request){
 
-        // echo "string";print_r($request->empID);die;
         
+        // echo "<pre>";print_r($request->all());die;
         // $emp_ID = $session_val['empID'];
         $input_details = array( "emp_ID" => $request->empID, );
         $get_documents_result = $this->admrpy->get_table('documents', $input_details );
@@ -618,7 +618,7 @@ class DocumentsController extends Controller
         return response()->json( $Contact_info_result );
         
     }
-
+    
     /*contact info */
     public function add_contact_info(Request $request){
 

@@ -676,3 +676,18 @@ Route::post('bh_sup_pms_checkbox_data_save','GoalsController@bh_sup_pms_checkbox
 Route::get('get_all_sup_info_bh','GoalsController@get_all_sup_info_bh');
 Route::post('employee_ctc_pdf_create','CtcController@employee_ctc_pdf_create');
 Route::post('followup_information','DocumentsController@followup_information');
+
+Route::post('doc_information_hr', 'DocumentsController@doc_information_hr');
+Route::post('my_team_experience_info', 'CommonController@my_team_experience_info');
+Route::get('my_team_profile_view','CommonController@my_team_profile_view');
+Route::post('my_team_profile','CommonController@my_team_profile');
+Route::post('Contact_info_view_myteam','CommonController@Contact_info_view_myteam');
+Route::post('my_team_account_info', 'CommonController@my_team_account_info');
+Route::post('my_team_experience_info_profile', 'CommonController@my_team_experience_info_profile');
+Route::post('my_team_education_info_view', 'CommonController@my_team_education_info_view');
+Route::post('my_team_family_information', 'CommonController@my_team_family_information');
+Route::post('my_team_followup_information','CommonController@my_team_followup_information');
+Route::post('hr_followup_information','CommonController@hr_followup_information');
+
+
+
