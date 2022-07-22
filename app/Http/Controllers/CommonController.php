@@ -15,6 +15,8 @@ use Validator;
 use Mail;
 use App\Models\UserActivityModel;
 use PDF;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str; //optional
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 
@@ -331,6 +333,37 @@ class CommonController extends Controller
                     });
                 /*email end*/
 
+        // $time = time();
+            $info = [
+                "emp_code" => $request->input('emp_code'),
+                'f_name'=>$request->input('f_name'),
+                'emrg_con_num'=>$request->input('emrg_con_num'),
+                'doj'=>$request->input('doj'),
+                'blood_grp'=>$request->input('blood_grp'),
+                'official_email'=>$request->input('official_email'),
+            ];
+
+
+
+        /*QR_CODE in PNG */
+        $user_name= $request->input('f_name').$request->input('m_name').$request->input('m_name');
+        $joining_Date = \Carbon\Carbon::createFromFormat('Y-m-d', $info['doj'])
+                    ->format('d-m-Y');
+        $qr_data=urlencode('Emp ID :'.$request->input('emp_code').
+            ', UserName :'.$user_name.
+            ', Date of Joining :'.$joining_Date.
+            ',Emergency number :'.$request->input('emrg_con_num').
+            ', Blood Group :'.$request->input('blood_grp').
+            ', Official Email :'.$request->input('official_email'));
+        $contents = file_get_contents('https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.$qr_data);
+        $filename = $request->input('emp_code').'.png'; 
+        Storage::put($filename, $contents);
+
+        $file_pointer = '../storage/app/'.$request->input('emp_code').'.png';
+        if (file_exists($file_pointer)) {
+            $qr_image = $file_pointer;
+        }
+        // echo '<pre>';print_r($image);die();   
             // ID Card pdf generator start
             $info = [
                 "emp_code" => $request->input('emp_code'),
@@ -340,7 +373,6 @@ class CommonController extends Controller
                 'blood_grp'=>$request->input('blood_grp'),
                 'official_email'=>$request->input('official_email'),
             ];
-            // echo '<pre>';print_r($info);die();            
             $pdf = new Fpdi();
         
             // set the source file
@@ -392,11 +424,11 @@ class CommonController extends Controller
                     $pdf->SetFont('Arial','B',20);
                     $pdf->SetXY(28,32);
                     $pdf->SetTextColor(255, 255, 255);
-                    $pdf->Cell(0,11,''.$info['doj'].'',0,0,'C');
+                    $pdf->Cell(0,11,''.$joining_Date.'',0,0,'C');
 
                     // Set font                 
                     $pdf->SetFont('Arial','B',20);
-                    $pdf->SetXY(30,44);
+                    $pdf->SetXY(35,44);
                     $pdf->SetTextColor(255, 255, 255);
                     $pdf->Cell(0,11,''.$info['blood_grp'].'',0,0,'C');
 
@@ -405,6 +437,9 @@ class CommonController extends Controller
                     $pdf->SetXY(40,55);
                     $pdf->SetTextColor(255, 255, 255);
                     $pdf->Cell(0,11,''.$info['official_email'].'',0,0,'C');
+
+                    // For image size(image_path, left, bottom, width, height)
+                    $pdf->Image($qr_image, 35, 135, 65, 65);
                 }
             
         }

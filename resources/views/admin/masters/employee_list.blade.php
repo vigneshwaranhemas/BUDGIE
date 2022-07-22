@@ -274,6 +274,7 @@
                      <button type="button" id="rev_but" class="btn btn-danger" data-toggle="modal" data-target="#ignoreModal" data-whatever="@mdo">Revert</button>
 
                   </center>
+                  
                </form>
                       </div>
                     </div>

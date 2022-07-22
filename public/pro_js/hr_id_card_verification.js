@@ -15,7 +15,7 @@ function hr_id_card_ver(id){
         data:{"id":id,},
         dataType: "json",
         success: function(data) {
-             console.log(data);
+             // console.log(data);
            if (data !="") {
                     $('#can_id').val(data['profile'].id);
                     $('#can_id_hr').val(data['profile'].id);
