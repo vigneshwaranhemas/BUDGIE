@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\IGoalRepository;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,13 +18,15 @@ use Illuminate\Support\Facades\Crypt;
 
 class GoalsController extends Controller
 {
-    public function __construct(IGoalRepository $goal)
+    public function __construct(IGoalRepository $goal,ICommonRepositories $cmmrpy)
     {
         $this->middleware('is_admin');
         $this->goal = $goal;
+         $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

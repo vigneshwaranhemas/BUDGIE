@@ -36,10 +36,11 @@ class LoginController extends Controller
             'password' => $req['login_password'],
             'active'=>'1',
         ];
-        // echo "<pre>";print_r($credentials);die;
-        if(auth()->attempt($credentials, true))
-        {
-            $info = [
+        
+        // $login_access=$this->cmmrpy->login_access_status();
+        // echo "<pre>";print_r($login_access);die;
+        if(auth()->attempt($credentials, true)){
+                 $info = [
                 'empID' => auth()->user()->empID,
                 'cdID' => auth()->user()->cdID,
                 'pre_onboarding' =>auth()->user()->pre_onboarding,
@@ -53,16 +54,22 @@ class LoginController extends Controller
                 'pms_status'=>auth()->user()->pms_status,
                 'pms_eligible_status'=>auth()->user()->pms_eligible_status,
             ];
-            // echo "<pre>";print_r($info);die;
-            Session::put("session_info",$info);
-            if($info['passcode_status']==1){
-             return response()->json( ['url'=>url('com_dashboard' ), 'logstatus' => 'success'] );
-            }
-            else if($info['passcode_status']==0){
-             return response()->json( ['url'=>url('change_password' ), 'logstatus' => 'success'] );
-
-            }
-        }else{
+                
+                if(Auth::user()->login_access==0){
+                      Session::put("session_info",$info);
+                        if($info['passcode_status']==1){
+                        $login_access_Data=$this->cmmrpy->login_access_update();
+                         return response()->json( ['url'=>url('com_dashboard' ), 'logstatus' => 'success'] );
+                        }
+                        else if($info['passcode_status']==0){
+                        $login_access_Data=$this->cmmrpy->login_access_update();
+                         return response()->json( ['url'=>url('change_password' ), 'logstatus' => 'success'] );
+                        }   
+                }elseif(Auth::user()->login_access==1){
+                  return response()->json( ['url'=>url( '../' ), 'logstatus' => 'already_login'] );
+                }  
+        }
+        else{
             return response()->json( ['url'=>url( '../' ), 'logstatus' => 'failed'] );
         }
     }
@@ -173,6 +180,7 @@ class LoginController extends Controller
 
     }
      public function logout(Request $request){
+        $login_access_logout=$this->cmmrpy->login_access_update_logout();
         $request->session()->invalidate();
         return redirect('login' );
     }

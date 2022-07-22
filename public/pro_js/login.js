@@ -103,8 +103,19 @@ $('#loginForm').submit(function(e) {
                             window.location = data.url;
                         }, 1000);
 
-                }
-                else{
+                }else if(data.logstatus =='already_login'){
+                    $('#btnLogin').attr('disabled',false);
+                    Toastify({
+                        text: "This Emp ID is Login on Another Device",
+                        duration: 3000,
+                        close:true,
+                        backgroundColor: "#f3616d",
+                    }).showToast();
+                    setTimeout(
+                        function() {
+                        }, 1000);
+
+                }else{
                     $('#btnLogin').attr('disabled',false);
                     Toastify({
                         text: "Emp ID or Password are wrong",
@@ -114,10 +125,7 @@ $('#loginForm').submit(function(e) {
                     }).showToast();
                     setTimeout(
                         function() {
-                            // window.location = data.url;
                         }, 1000);
-
-
                 }
 
             }

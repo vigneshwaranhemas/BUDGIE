@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Repositories\IHrPreonboardingrepositories;
 use App\Repositories\IPreOnboardingrepositories;
+use App\Repositories\ICommonRepositories;
 use App\Repositories\IAdminRepository;
 use Illuminate\Http\Request;
 use Session;
@@ -32,15 +33,17 @@ class HrController extends Controller
 {
     public $preon;
 
-    public function __construct(IHrPreonboardingrepositories $hpreon,IPreOnboardingrepositories $preon,IAdminRepository $admrpy)
+    public function __construct(IHrPreonboardingrepositories $hpreon,IPreOnboardingrepositories $preon,IAdminRepository $admrpy,ICommonRepositories $cmmrpy)
     {
         $this->hpreon = $hpreon;
         $this->preon = $preon;
         $this->admrpy = $admrpy;
+        $this->cmmrpy = $cmmrpy;
         $this->middleware('is_admin');
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

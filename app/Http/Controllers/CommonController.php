@@ -46,6 +46,7 @@ class CommonController extends Controller
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{
@@ -582,6 +583,7 @@ class CommonController extends Controller
             'confirm_password'=>bcrypt($req->input('confirm_password')),
             'passcode_status'=>"1",
         );
+        $login_access_logout=$this->cmmrpy->login_access_update_logout();
         $change_password_process_result = $this->cmmrpy->change_password_process( $input_details );
 
         $response = 'Updated';

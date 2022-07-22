@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ICtcRepository;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
@@ -16,13 +17,15 @@ use Illuminate\Support\Facades\Crypt;
 
 class CtcController extends Controller
 {
-    public function __construct(ICtcRepository $ctcrop)
+    public function __construct(ICtcRepository $ctcrop,ICommonRepositories $cmmrpy)
     {
         $this->middleware('is_admin');
         $this->ctcrop = $ctcrop;
+        $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

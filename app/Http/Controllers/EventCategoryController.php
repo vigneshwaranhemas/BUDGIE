@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\IEventCategoryrepositories;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Http\Request;
 use App\EventCategory;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,15 @@ class EventCategoryController extends Controller
 
     public $event_category;  
 
-    public function __construct(IEventCategoryrepositories $event_category)
+    public function __construct(IEventCategoryrepositories $event_category,ICommonRepositories $cmmrpy)
     {
         $this->middleware('is_admin');
         $this->event_category = $event_category;
+        $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

@@ -1,9 +1,11 @@
 <?php
 namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\ICommonRepositories;
 use App\Models\CustomUser;
 use App\Models\StickyNotesModel;
 use App\Goals;
+use Auth;
 
 class CommonRepositories implements ICommonRepositories
 {
@@ -247,7 +249,6 @@ class CommonRepositories implements ICommonRepositories
 
         $update_mdlusertbl = new CustomUser();
         $update_mdlusertbl = $update_mdlusertbl->where( 'empID', '=', $form_credentials['empID'] );
-
         $update_mdlusertbl->update( [
             'passcode' => $form_credentials['confirm_password'],
             'passcode_status' => $form_credentials['passcode_status']
@@ -401,12 +402,36 @@ class CommonRepositories implements ICommonRepositories
         return $update_roletbl;
     }
     public function my_teams_list_result_name($id){
-        // DB::enableQueryLog();
         $my_teams_members=CustomUser::select('username','m_name','l_name','empID')
                                 ->where('sup_emp_code',$id)
                                 ->orwhere('reviewer_emp_code',$id)
                                 ->get();
-        // dd(DB::getQueryLog());        
+        return $my_teams_members;
+
+    }
+    public function login_access_update(){
+       $empID = Auth::user()->empID;
+        // DB::enableQueryLog();
+       $update_roletbl = DB::table('customusers')->where( 'empID', '=', $empID);
+        $update_roletbl->update( [
+            'login_access'=>'1',
+        ] );
+        // dd(DB::getQueryLog());
+    }
+    public function login_access_update_logout(){
+       $empID = Auth::user()->empID;
+        // DB::enableQueryLog();
+       $update_roletbl = DB::table('customusers')->where( 'empID', '=', $empID);
+        $update_roletbl->update( [
+            'login_access'=>'0',
+        ] );
+        // dd(DB::getQueryLog());
+    }
+    public function login_access_status(){
+        $empID = Auth::user()->empID;
+        $my_teams_members=CustomUser::select('login_access')
+                                ->where('empID',$empID)
+                                ->get();
         return $my_teams_members;
 
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\IEventRepositories;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Http\Request;
 use App\Event;
 use App\EventAttendee;
@@ -17,13 +18,15 @@ class EventController extends Controller
 
     public $event;
 
-    public function __construct(IEventRepositories $event)
+    public function __construct(IEventRepositories $event,ICommonRepositories $cmmrpy)
     {
         $this->middleware('is_admin');
         $this->event = $event;  
+        $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Repositories\IBuddyrepositories;
 use App\Repositories\IPreOnboardingrepositories;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,15 @@ class BuddyController extends Controller
 {
     private $brep;
 
-    public function __construct(IBuddyrepositories $brep,IPreOnboardingrepositories $preon){
+    public function __construct(IBuddyrepositories $brep,IPreOnboardingrepositories $preon,ICommonRepositories $cmmrpy){
          $this->brep=$brep;
          $this->preon = $preon;
+         $this->cmmrpy = $cmmrpy;
          $this->middleware('is_admin');
          $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

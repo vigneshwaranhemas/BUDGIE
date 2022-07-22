@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Repositories\IPreOnboardingrepositories;
 use Illuminate\Http\Request;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Epf_Forms;
@@ -17,13 +18,15 @@ use App\Models\CustomUser;
 class CandidateController extends Controller
 {
     public $preon;
-    public function __construct(IPreOnboardingrepositories $preon)
+    public function __construct(IPreOnboardingrepositories $preon,ICommonRepositories $cmmrpy)
     {
             $this->preon = $preon;
+            $this->cmmrpy = $cmmrpy;
             $this->middleware('is_admin');
             $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

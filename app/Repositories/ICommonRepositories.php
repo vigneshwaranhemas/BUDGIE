@@ -20,6 +20,8 @@ interface ICommonRepositories {
     public function pms_oneor_not($id);
     public function pms_oneor_not_naps($id);
     public function delete_pro_img($id);
+    public function login_access_update();
+    public function login_access_update_logout();
 
     // public function Fetch_goals_user_info($id);
 

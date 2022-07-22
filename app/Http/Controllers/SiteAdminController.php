@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\ICommonRepositories;
 use Carbon\Carbon;
 use Auth;
 
 class SiteAdminController extends Controller
 {
-    public function __construct()
+    public function __construct(ICommonRepositories $cmmrpy)
     {
+
         $this->middleware('is_admin');
+         $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Repositories\IHrPreonboardingrepositories;
 use App\Repositories\IITInfraRepository;
+use App\Repositories\ICommonRepositories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -12,15 +13,17 @@ use Session;
 
 class ItInfraController extends Controller
 {
-    public function __construct(IHrPreonboardingrepositories $hpreon,IITInfraRepository $itrep)
+    public function __construct(IHrPreonboardingrepositories $hpreon,IITInfraRepository $itrep,ICommonRepositories $cmmrpy)
     {
         $this->hpreon = $hpreon;
         $this->itrep=$itrep;
+        $this->cmmrpy = $cmmrpy;
         $this->middleware('is_admin');
         // $this->middleware('is_itinfra');
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{

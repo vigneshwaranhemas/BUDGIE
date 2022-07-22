@@ -29,9 +29,8 @@ class AdminController extends Controller
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
-                  // return response()->view('login');
+              $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
-
               }
               else{
                return $next($request);                

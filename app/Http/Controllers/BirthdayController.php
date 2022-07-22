@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\IHolidayRepository;
+use App\Repositories\ICommonRepositories;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,13 +13,15 @@ use Session;
 
 class BirthdayController extends Controller
 {
-    public function __construct(IHolidayRepository $holiday)
+    public function __construct(IHolidayRepository $holiday,ICommonRepositories $cmmrpy)
     {
         $this->middleware('is_admin');
         $this->holiday = $holiday;
+        $this->cmmrpy = $cmmrpy;
         $this->middleware(function($request,$next){
               $session_val=Session::get('session_info');
               if($session_val=="" || $session_val === null){
+                $login_access_logout=$this->cmmrpy->login_access_update_logout();
                   return redirect('login');
               }
               else{
